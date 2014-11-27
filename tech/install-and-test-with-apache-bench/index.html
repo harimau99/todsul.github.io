@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Todd Sullivan"/>
+
+<!-- START UPDATE -->
+<meta name="description" content="Install and Test with Apache Bench">
+<title>Install and Test with Apache Bench</title>
+<!-- END UPDATE -->
+
+<link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+<link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+<section id="social">
+<div class="line"></div>
+<a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+<a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+<a href="/feed.xml" target="_blank"><i>r</i></a>
+</section>
+
+<a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+<header>
+
+<!-- START UPDATE -->
+<h1>Install and Test with Apache Bench</h1>
+<time datetime="2012-01-05" pubdate>January 2012</time>
+<!-- END UPDATE -->
+
+</header>
+
+<!-- START UPDATE -->
+<p>Apache Bench is an easy-to-use tool for load testing and is available in most Linux distros. This article shows how to setup three tests: a static file test, a dynamic file (PHP) test, and a database (MySQL) access test.</p>
+
+<p>Apache Bench is a load testing tool for web servers.</p>
+
+<h2>Install Apache Bench</h2>
+
+<pre><code>sudo aptitude install apache2-utils
+</code></pre>
+
+<h2>Run Apache Bench</h2>
+
+<p>The following line uses keepalive for 50,000 connections, at a concurrency of 100 and a timeout of 20 seconds. Be sure to end root domains with a slash.</p>
+
+<pre><code>ab -k -n 50000 -c 100 -t 20 http://example.com/
+</code></pre>
+
+<h2>Create a Static HTML Test File</h2>
+
+<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm
+</code></pre>
+
+<p>Add the following content to the test file:</p>
+
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+This is a web server test page.
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2>Create a Dynamic PHP File</h2>
+
+<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm
+</code></pre>
+
+<p>Add the following content to the test file:</p>
+
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;?php echo '&lt;html&gt;'; ?&gt;
+&lt;?php echo '&lt;head&gt;&lt;title&gt;#2 PHP Test&lt;/title&gt;&lt;/head&gt;'; ?&gt;
+&lt;?php echo '&lt;body&gt;'; ?&gt;
+&lt;?php echo 'This is a web server test page.'; ?&gt;
+&lt;?php echo '&lt;/body&gt;'; ?&gt;
+&lt;?php echo '&lt;/html&gt;'; ?&gt;
+</code></pre>
+
+<h2>Create a Dynamic MySQL File</h2>
+
+<pre><code>sudo vi /srv/www/example.com/web/testmysql.php
+</code></pre>
+
+<p>Add the following content to the test file:</p>
+
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;?php
+   $link = mysql_connect("localhost", "username", "password");
+   mysql_select_db("mytest");
+
+   $query = "SELECT * FROM mytest";
+   $result = mysql_query($query);
+
+   while ($line = mysql_fetch_array($result))
+   {
+       print "$line[0]\n";
+   }
+   mysql_close($link);
+?&gt;
+</code></pre>
+
+<p>Configure the database for the test file:</p>
+
+<pre><code>USE mytest
+CREATE TABLE mytest (content text) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+INSERT INTO mytest (content) VALUES('&lt;html&gt;&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;This is a web server test page.&lt;/body&gt;&lt;/html&gt;');
+</code></pre>
+<!-- END UPDATE -->
+
+<footer>&copy; Todd Sullivan</footer>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-40661262-1', 'todsul.com');
+ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>

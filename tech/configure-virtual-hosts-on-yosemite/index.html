@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Todd Sullivan"/>
+
+  <!-- START UPDATE -->
+  <meta name="description" content="Configure Virtual Hosts on Yosemite">
+  <title>Configure Virtual Hosts on Yosemite</title>
+  <!-- END UPDATE -->
+
+  <link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+  <section id="social">
+    <div class="line"></div>
+    <a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+    <a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+    <a href="/feed.xml" target="_blank"><i>r</i></a>
+  </section>
+
+  <a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+  <header>
+
+    <!-- START UPDATE -->
+    <h1>Configure Virtual Hosts on Yosemite</h1>
+    <time datetime="2014-11-27" pubdate>November 2014</time>
+    <!-- END UPDATE -->
+
+  </header>
+
+  <!-- START UPDATE -->
+  <p>This is to setup virtual host on Apache 2.4 on Mac OS X 10.10 (Yosemite).</p>
+
+  <h2>Configure HTTPD</h2>
+
+  <p>Use vi to configure the httpd.conf file.</p>
+
+  <pre><code>sudo vi /etc/apache2/httpd.conf
+  </code></pre>
+
+  <p>Enable virtual hosts by uncommenting these lines:</p>
+
+  <pre><code>LoadModule vhost_alias_module libexec/apache2/mod_vhost_alias.so
+    ...
+    LoadModule userdir_module libexec/apache2/mod_userdir.so
+    ...
+    Include /private/etc/apache2/extra/httpd-userdir.conf
+    ...
+    Include /private/etc/apache2/extra/httpd-vhosts.conf
+  </code></pre>
+
+  <h2>Configure User Permissions</h2>
+
+  <p>Create a conf file to give your user permissions.</p>
+
+  <pre><code>sudo vi /etc/apache2/users/[username].conf
+  </code></pre>
+
+  <p>Copy and paste the following into the new conf file.</p>
+
+  <pre><code>&lt;Directory "/path/to/web/folder"&gt;
+    Options FollowSymLinks Indexes MultiViews
+    Require all granted
+    AllowOverride All
+    &lt;/Directory&gt;
+  </code></pre>
+
+  <h2>Configure Hosts</h2>
+
+  <p>Use vi to configure the hosts file.</p>
+
+  <pre><code>sudo vi /etc/hosts
+  </code></pre>
+
+  <p>Add a virtual hostname for each website.</p>
+
+  <pre><code>127.0.0.1 [example].localhost
+  </code></pre>
+
+  <h2>Configure Web Directory</h2>
+
+  <p>Configure the virtual host directory and server name.</p>
+
+  <pre><code>sudo vi /etc/apache2/extra/httpd-vhosts.conf
+  </code></pre>
+
+  <p>Copy and past this block for each website.</p>
+
+  <pre><code>&lt;VirtualHost *:80&gt;
+    DocumentRoot '/path/to/web/folder'
+    ServerName [example].localhost
+    &lt;/VirtualHost&gt;
+  </code></pre>
+
+  <p>Restart Apache.</p>
+
+  <pre><code>sudo apachectl restart</code></pre>
+
+  <h2>Test</h2>
+
+  <p>Visit http://example.localhost.</p>
+  <!-- END UPDATE -->
+
+  <footer>&copy; Todd Sullivan</footer>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-40661262-1', 'todsul.com');
+    ga('send', 'pageview');
+  </script>
+
+</body>
+
+</html>

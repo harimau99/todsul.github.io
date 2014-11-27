@@ -1,0 +1,47 @@
+@media screen and (min-width: 60em) {
+    body {
+        border-left: 0.0625rem solid @green;
+        padding: 3.5rem 3rem;
+    }
+
+    #logo {
+        margin: 0 0 0 -11.25rem;
+        position: fixed;
+    }
+
+    #social {
+        margin: -3.5rem 0 0 36rem;
+        padding: 0;
+        position: fixed;
+        width: 10rem;
+
+        div {
+            height: 13rem;
+            position: absolute;
+            width: 0.0625rem;
+            .gradient(@dull,@white);
+        }
+
+        i {
+            margin-top: 4.5rem;
+        }
+    }
+
+    h1, time, footer {
+        text-align: left;
+    }
+
+    h1 {
+        margin-left: -3rem;
+        margin-right: -3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+@media screen and (min-width: 35em) {
+    #home aside {
+        margin: 0 -3rem 1.75rem;
+        padding: 1.75rem 3rem;
+    }
+}

@@ -1,0 +1,27 @@
+.gradient (@top, @bottom) {
+    background: -khtml-gradient(linear,left top,left bottom,from(@top),to(@bottom));
+    background: -moz-linear-gradient(top, @top, @bottom);
+    background: -ms-linear-gradient(top, @top, @bottom);
+    background: -o-linear-gradient(top, @top, @bottom);
+    background: -webkit-gradient(linear,left top,left bottom,from(@top),to(@bottom));
+    background: -webkit-linear-gradient(top, @top, @bottom);
+    background: linear-gradient(top, @top, @bottom);
+}
+
+.radius (@values) {
+    -khtml-border-radius: @values;
+    -moz-border-radius: @values;
+    -ms-border-radius: @values;
+    -o-border-radius: @values;
+    -webkit-border-radius: @values;
+    border-radius: @values;
+}
+
+.transition (@value1,@value2:X,...) {
+    @args: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+    -webkit-transition: @args;
+    -moz-transition: @args;
+    -ms-transition: @args;
+    -o-transition: @args;
+    transition: @args;
+}

@@ -1,0 +1,22 @@
+#logo {
+    background: @light;
+    border: 0.1875rem solid @green;
+    display: block;
+    height: 4.8125rem;
+    margin: 0.875rem auto;
+    text-align: center;
+    width: 4.8125rem;
+    .radius(4.8125rem);
+    .transition(background-color 0.3s ease, border 0.3s ease);
+
+    img {
+        height: 3.875rem;
+        padding: 0.5rem 0;
+        width: 3.0625rem;
+    }
+
+    &:hover {
+        background: @white;
+        border: 0.1875rem solid @medium;
+    }
+}

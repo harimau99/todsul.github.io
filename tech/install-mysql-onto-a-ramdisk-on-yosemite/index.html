@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Todd Sullivan"/>
+
+  <!-- START UPDATE -->
+  <meta name="description" content="Install MySQL onto a Ramdisk on Yosemite">
+  <title>Install MySQL onto a Ramdisk on Yosemite</title>
+  <!-- END UPDATE -->
+
+  <link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+  <section id="social">
+    <div class="line"></div>
+    <a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+    <a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+    <a href="/feed.xml" target="_blank"><i>r</i></a>
+  </section>
+
+  <a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+  <header>
+
+    <!-- START UPDATE -->
+    <h1>Install MySQL onto a Ramdisk on Yosemite</h1>
+    <time datetime="2014-11-27" pubdate>November 2014</time>
+    <!-- END UPDATE -->
+
+  </header>
+
+  <!-- START UPDATE -->
+  <p>This is to setup MySQL onto a ramdisk on Mac OS X 10.10 (Yosemite).</p>
+
+  <h2>Instal MySQL</h2>
+
+  <ul>
+    <li>Download and install MySQL from the <a href="http://www.mysql.com/downloads/mysql/">download page</a>.</li>
+    <li>Make sure it's the 64-bit DMG archive version</li>
+  </ul>
+
+  <h2>Configure MySQL for a Ramdisk</h2>
+
+  <pre><code>sudo cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf
+  sudo vi /etc/my.cnf
+  </code></pre>
+
+  <p>Enter the following config into my.cnf:</p>
+
+  <pre><code>[mysqld]
+  ...
+  default_time_zone = '+00:00'
+  datadir = /Volumes/ramdisk/data
+  innodb_flush_log_at_trx_commit = 2
+  innodb_data_home_dir = /Volumes/ramdisk/data
+  </code></pre>
+
+  <h2>Set Path and Aliases</h2>
+
+  <p>Create a bash profile to set the MySQL path and aliases.</p>
+
+  <pre><code>sudo vi ~/.bash_profile</code></pre>
+
+  <p>Add these lines to the file:</p>
+
+  <pre><code>export PATH="/usr/local/mysql/bin:$PATH"
+  alias ramdisk='/path/to/ramdisk.sh'
+  alias mysetup='/path/to/mysetup.sh'
+  </code></pre>
+
+  <pre><code>su - [username]</code></pre>
+
+  <h2>Setup Scripts</h2>
+
+  <p>Create and save the ramdisk.sh script file:</p>
+
+  <pre><code>diskutil erasevolume HFS+ "ramdisk" `hdiutil attach -nomount ram://2048000`
+  sudo cp -R /usr/local/mysql/data /Volumes/ramdisk/data
+  </code></pre>
+
+  <p>Create and save the mysetup.sh script file:</p>
+
+  <pre><code>/usr/local/mysql/support-files/mysql.server start
+
+  mysql -u root -e "create database if not exists [database];"
+  mysql -u root -e "create user '[username]' identified by '[password]';"
+  mysql -u root -e "grant all privileges on *.* to [database]@localhost;"
+  mysql -u root -e "use mysql; update user set password=password('[password]') where user ='[username]';"
+  mysql -u root -e "flush privileges;"
+
+  /usr/local/mysql/support-files/mysql.server restart
+  </code></pre>
+
+  <h2>Optional: Configure PHP to use MySQL</h2>
+
+  <pre><code>sudo vi /etc/php.ini</code></pre>
+
+  <p>Find and update this line:</p>
+
+  <pre><code>pdo_mysql.default_socket=/tmp/mysql_ram.sock</code></pre>
+  
+  <h2>Test</h2>
+
+  <pre><code>ramdisk
+  mysetup</code></pre>
+  <!-- END UPDATE -->
+
+  <footer>&copy; Todd Sullivan</footer>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-40661262-1', 'todsul.com');
+    ga('send', 'pageview');
+  </script>
+
+</body>
+
+</html>

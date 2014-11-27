@@ -1,2 +1,5 @@
-todsul.github.io
-================
+# Readme
+
+## Deploying
+
+* git push origin master

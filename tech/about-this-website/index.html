@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Todd Sullivan"/>
+
+<!-- START UPDATE -->
+<meta name="description" content="About This Website">
+<title>About This Website</title>
+<!-- END UPDATE -->
+
+<link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+<link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+<section id="social">
+<div class="line"></div>
+<a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+<a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+<a href="/feed.xml" target="_blank"><i>r</i></a>
+</section>
+
+<a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+<header>
+
+<!-- START UPDATE -->
+<h1>About This Website</h1>
+<time datetime="2013-07-20" pubdate>July 2013</time>
+<!-- END UPDATE -->
+
+</header>
+
+<!-- START UPDATE -->
+<p>I use this website to test technical ideas and concepts that may make it to Flightfox. Some of it's for performance, some just for fun. See below for a list of the, albeit rudimentary, concepts tested.</p>
+
+<h2>Design</h2>
+
+<ul>
+<li>Perfect vertical rhythm of all sections, text and images</li>
+<li>SVG logo that scales, no need for separate 'retina' images</li>
+<li>Only using 'rem' units, no px, em or pt</li>
+<li>Icon font for the little 'read more' icon</li>
+<li>Fully responsive layout and high-DPI resolution friendly</li>
+<li>Increased browser text-size and zoom friendly</li>
+<li>Optimized CSS for EOT, SVG, TTF and WOFF font formats</li>
+<li>Uses Open Sans font, including the condensed version for headings</li>
+<li>Uses HTML5 elements, including datetime and pubdate attributes</li>
+<li><del>Larger intro paragraph text</del></li>
+</ul>
+
+<h2>Performance</h2>
+
+<ul>
+<li>All content is static HTML</li>
+<li><del>All resources gzipped and cached for 1 year</del> (now hosted on GitHub)</li>
+<li><del>Custom Nginx MIME types to gzip fonts</del> (now hosted on GitHub)</li>
+<li>Cache bursting in URI, opposed to query string</li>
+<li>Minimal HTML5 markup, no compatability concessions</li>
+<li>No Javascript, other than the Google Analytics snippit</li>
+<li>All LessCSS files compiled into a single, minified file</li>
+</ul>
+
+<h2>Just For Fun</h2>
+
+<ul>
+<li>No ID or classes in CSS, all element selectors (I know, I know)</li>
+<li>No Javascript, other than the Google Analytics snippit</li>
+</ul>
+
+
+<h2>To Do</h2>
+
+<ul>
+<li>Use a separate cookieless domain for assets</li>
+<li>Build blog processor, minify HTML, make life easier</li>
+<li>Microcache HTML pages with NGINX, maybe with Memcache</li>
+<li>Convert to SSL and configure SPDY</li>
+</ul>
+<!-- END UPDATE -->
+
+<footer>&copy; Todd Sullivan</footer>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-40661262-1', 'todsul.com');
+ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>

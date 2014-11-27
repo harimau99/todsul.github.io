@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Todd Sullivan"/>
+
+  <!-- START UPDATE -->
+  <meta name="description" content="Configure PHP on Yosemite">
+  <title>Configure PHP on Yosemite</title>
+  <!-- END UPDATE -->
+
+  <link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+  <section id="social">
+    <div class="line"></div>
+    <a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+    <a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+    <a href="/feed.xml" target="_blank"><i>r</i></a>
+  </section>
+
+  <a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+  <header>
+
+    <!-- START UPDATE -->
+    <h1>Configure PHP on Yosemite</h1>
+    <time datetime="2014-11-27" pubdate>November 2014</time>
+    <!-- END UPDATE -->
+
+  </header>
+
+  <!-- START UPDATE -->
+  <p>This is to setup PHP on Mac OS X 10.10 (Yosemite).</p>
+
+  <h2>Optional: Set NoPassword</h2>
+
+  <p>Set owner permissions to cache and logs.</p>
+
+  <pre><code>sudo visudo</code></pre>
+
+  <pre><code>[username] ALL=(ALL) NOPASSWD: ALL</code></pre>
+
+  <h2>Configure HTTPD</h2>
+
+  <p>Use vi to configure the httpd.conf file.</p>
+
+  <pre><code>sudo vi /etc/apache2/httpd.conf
+  </code></pre>
+
+  <p>Enable PHP by uncommenting these lines:</p>
+
+  <pre><code>LoadModule php5_module libexec/apache2/libphp5.so
+  </code></pre>
+
+  <h2>Create and configure PHP</h2>
+
+  <pre><code>sudo cp /etc/php.ini.default /etc/php.ini
+  sudo vi /etc/php.ini
+  </code></pre>
+
+  <pre><code>date.timezone = UTC
+  </code></pre>
+
+  <h2>Optional: Configure Cache/Log Permissions</h2>
+
+  <p>Set owner permissions to cache and logs.</p>
+
+  <pre><code>cd /path/to/web/folder
+  sudo rm -rf app/cache/*
+  sudo rm -rf app/logs/*
+  sudo chmod +a "www allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+  sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+  </code></pre>
+
+  <h2>Restart Apache</h2>
+
+  <pre><code>sudo apachectl restart</code></pre>
+  <!-- END UPDATE -->
+
+  <footer>&copy; Todd Sullivan</footer>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-40661262-1', 'todsul.com');
+    ga('send', 'pageview');
+  </script>
+
+</body>
+
+</html>
