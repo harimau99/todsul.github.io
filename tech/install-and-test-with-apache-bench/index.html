@@ -44,20 +44,17 @@
 
 <h2>Install Apache Bench</h2>
 
-<pre><code>sudo aptitude install apache2-utils
-</code></pre>
+<pre><code>sudo aptitude install apache2-utils</code></pre>
 
 <h2>Run Apache Bench</h2>
 
 <p>The following line uses keepalive for 50,000 connections, at a concurrency of 100 and a timeout of 20 seconds. Be sure to end root domains with a slash.</p>
 
-<pre><code>ab -k -n 50000 -c 100 -t 20 http://example.com/
-</code></pre>
+<pre><code>ab -k -n 50000 -c 100 -t 20 http://example.com/</code></pre>
 
 <h2>Create a Static HTML Test File</h2>
 
-<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm
-</code></pre>
+<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm</code></pre>
 
 <p>Add the following content to the test file:</p>
 
@@ -67,13 +64,11 @@
 &lt;body&gt;
 This is a web server test page.
 &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+&lt;/html&gt;</code></pre>
 
 <h2>Create a Dynamic PHP File</h2>
 
-<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm
-</code></pre>
+<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm</code></pre>
 
 <p>Add the following content to the test file:</p>
 
@@ -83,13 +78,11 @@ This is a web server test page.
 &lt;?php echo '&lt;body&gt;'; ?&gt;
 &lt;?php echo 'This is a web server test page.'; ?&gt;
 &lt;?php echo '&lt;/body&gt;'; ?&gt;
-&lt;?php echo '&lt;/html&gt;'; ?&gt;
-</code></pre>
+&lt;?php echo '&lt;/html&gt;'; ?&gt;</code></pre>
 
 <h2>Create a Dynamic MySQL File</h2>
 
-<pre><code>sudo vi /srv/www/example.com/web/testmysql.php
-</code></pre>
+<pre><code>sudo vi /srv/www/example.com/web/testmysql.php</code></pre>
 
 <p>Add the following content to the test file:</p>
 
@@ -106,15 +99,13 @@ This is a web server test page.
        print "$line[0]\n";
    }
    mysql_close($link);
-?&gt;
-</code></pre>
+?&gt;</code></pre>
 
 <p>Configure the database for the test file:</p>
 
 <pre><code>USE mytest
 CREATE TABLE mytest (content text) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-INSERT INTO mytest (content) VALUES('&lt;html&gt;&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;This is a web server test page.&lt;/body&gt;&lt;/html&gt;');
-</code></pre>
+INSERT INTO mytest (content) VALUES('&lt;html&gt;&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;This is a web server test page.&lt;/body&gt;&lt;/html&gt;');</code></pre>
 <!-- END UPDATE -->
 
 <footer>&copy; Todd Sullivan</footer>

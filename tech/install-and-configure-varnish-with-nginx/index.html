@@ -46,8 +46,7 @@
 
 <pre><code>sudo su -
 curl http://repo.varnish-cache.org/debian/GPG-key.txt | apt-key add -
-echo "deb http://repo.varnish-cache.org/ubuntu/ $(lsb_release -s -c) varnish-3.0" &gt;&gt; /etc/apt/sources.list
-</code></pre>
+echo "deb http://repo.varnish-cache.org/ubuntu/ $(lsb_release -s -c) varnish-3.0" &gt;&gt; /etc/apt/sources.list</code></pre>
 
 <h2>Install the Package</h2>
 
@@ -56,23 +55,20 @@ echo "deb http://repo.varnish-cache.org/ubuntu/ $(lsb_release -s -c) varnish-3.0
 <pre><code>su [user]
 sudo aptitude update
 sudo aptitude install varnish
-varnishstat -V
-</code></pre>
+varnishstat -V</code></pre>
 
 <h2>Configure the VCL</h2>
 
 <p>VCL is the Varnish Configuration Language. The VCL file holds most of the config.</p>
 
-<pre><code>sudo vi /etc/varnish/default.vcl
-</code></pre>
+<pre><code>sudo vi /etc/varnish/default.vcl</code></pre>
 
 <p>Tell Varnish to communicate with the content server (Nginx) on port 8080.</p>
 
 <pre><code>backend default {
     .host = "127.0.0.1";
     .port = "8080";
-}
-</code></pre>
+}</code></pre>
 
 <p>With the above config, Varnish will only cache files without cookies. The following config strips all cookies and caches everything. The ideal config is somewhere in between.</p>
 
@@ -81,15 +77,13 @@ varnishstat -V
 }
 sub vcl_fetch {
     unset beresp.http.set-cookie;
-}
-</code></pre>
+}</code></pre>
 
 <h2>Configure the Daemon</h2>
 
 <p>The Varnish daemon file sets ports, hosts, storage method, etc.</p>
 
-<pre><code>sudo vi /etc/default/varnish
-</code></pre>
+<pre><code>sudo vi /etc/default/varnish</code></pre>
 
 <p>Tell Varnish to listen on port 80.</p>
 
@@ -97,24 +91,21 @@ sub vcl_fetch {
              -T localhost:6082
              -f /etc/varnish/default.vcl
              -S /etc/varnish/secret
-             -s malloc,256M"
-</code></pre>
+             -s malloc,256M"</code></pre>
 
 <h2>Configure Nginx Hosting</h2>
 
 <p>Varnish sits in front of Nginx on port 80 and talks to Nginx on 8080. Nginx defaults to 80, so make sure every Nginx server config listens on 8080. If not, Nginx will intercept Varnish.</p>
 
 <pre><code>sudo vi /etc/nginx/sites-available/default
-sudo vi /etc/nginx/sites-available/example.com
-</code></pre>
+sudo vi /etc/nginx/sites-available/example.com</code></pre>
 
 <p>Add the listen directive to the default Nginx server config.</p>
 
 <pre><code>server {
     listen 8080;
     ...
-}
-</code></pre>
+}</code></pre>
 
 <p>Do the same for the example.com virtual host config.</p>
 
@@ -128,8 +119,7 @@ server {
     listen 8080;
     server_name example.com;
     ...
-}
-</code></pre>
+}</code></pre>
 
 <h2>Restart Services</h2>
 
@@ -137,16 +127,14 @@ server {
 
 <pre><code>sudo service nginx restart
 sudo service php5-fpm restart
-sudo service varnish restart
-</code></pre>
+sudo service varnish restart</code></pre>
 
 <h2>Troubleshooting</h2>
 
 <p>If you see an Nginx error when you visit a page, or if page headers don't mention Varnish, it's likely Nginx is still listening on port 80. Turn off Varnish and use netstat to check ports.</p>
 
 <pre><code>sudo /etc/init.d/varnish stop
-netstat -an | grep LISTEN
-</code></pre>
+netstat -an | grep LISTEN</code></pre>
 
 <p>If you see anything on port 80, make sure all Nginx virtual hosts are listening on port 8080.</p>
 <!-- END UPDATE -->

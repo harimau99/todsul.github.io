@@ -44,24 +44,21 @@
 
 <pre><code>sudo aptitude update
 sudo aptitude install mysql-server
-sudo aptitude install php5-mysql
-</code></pre>
+sudo aptitude install php5-mysql</code></pre>
 
 <h2>Secure MySQL and Login</h2>
 
 <p>Choose yes for all questions, except to change the root password.</p>
 
 <pre><code>sudo mysql_secure_installation
-mysql -u root -p
-</code></pre>
+mysql -u root -p</code></pre>
 
 <p>If necessary, add the mysql path (/usr/local/mysql/bin) to the profile and refresh.</p>
 
 <pre><code>cd
 vi  ~/.profile
 . ./.profile
-echo $PATH
-</code></pre>
+echo $PATH</code></pre>
 
 <h2>Create a database</h2>
 
@@ -73,38 +70,33 @@ create database mytest;
 create user 'username' identified by 'password';
 grant all privileges on *.* to username@localhost;
 flush privileges;
-exit
-</code></pre>
+exit</code></pre>
 
 <h2>Export a Database</h2>
 
 <p>Switch to the superuser to avoid any permissions issues.</p>
 
 <pre><code>sudo su -
-mysqldump -u [user] -p [database] &gt; [filename].sql
-</code></pre>
+mysqldump -u [user] -p [database] &gt; [filename].sql</code></pre>
 
 <h2>Import a Database</h2>
 
 <p>For smaller files, import from the unix shell.</p>
 
-<pre><code>mysql -u [user] -p [database] &lt; [filename].sql
-</code></pre>
+<pre><code>mysql -u [user] -p [database] &lt; [filename].sql</code></pre>
 
 <p>For larger files, use the source command inside mysql.</p>
 
 <pre><code>mysql -u [user] -p
 use [database]
-source &lt; [file].sql
-</code></pre>
+source &lt; [file].sql</code></pre>
 
 <h2>Set Charset</h2>
 
 <p>We want end-to-end UTF8.</p>
 
 <pre><code>ALTER DATABASE DEFAULT CHARACTER SET utf8;
-ALTER TABLE [exampletable] DEFAULT CHARACTER SET utf8;
-</code></pre>
+ALTER TABLE [exampletable] DEFAULT CHARACTER SET utf8;</code></pre>
 <!-- END UPDATE -->
 
 <footer>&copy; Todd Sullivan</footer>

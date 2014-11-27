@@ -52,8 +52,7 @@
 sudo unzip Archive.zip
 sudo chown [user] /srv/www/example.com
 sudo chmod -R 777 /srv/www/example.com/app/cache
-sudo chmod -R 777 /srv/www/example.com/app/logs
-</code></pre>
+sudo chmod -R 777 /srv/www/example.com/app/logs</code></pre>
 
 <h2>Setup Resources</h2>
 
@@ -61,8 +60,7 @@ sudo chmod -R 777 /srv/www/example.com/app/logs
 
 <pre><code>cd /srv/www/example.com
 app/console assetic:dump
-app/console assets:install --symlink web
-</code></pre>
+app/console assets:install --symlink web</code></pre>
 
 <h2>Configure Nginx for Symfony</h2>
 
@@ -80,8 +78,7 @@ app/console assets:install --symlink web
 
 <p>Open the Nginx config.</p>
 
-<pre><code>sudo vi /etc/nginx/sites-available/example.com
-</code></pre>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com</code></pre>
 
 <p>Copy and paste the following:</p>
 
@@ -111,15 +108,13 @@ server {
         fastcgi_pass unix:/var/run/php5-fpm.sock;
         fastcgi_param  SERVER_PORT 80;
     }
-}
-</code></pre>
+}</code></pre>
 
 <h2>Configure Varnish for Symfony</h2>
 
 <p>Remove any cookie manipulation and add ESI handling.</p>
 
-<pre><code>sudo vi /etc/varnish/default.vcl
-</code></pre>
+<pre><code>sudo vi /etc/varnish/default.vcl</code></pre>
 
 <p>Copy and paste the following:</p>
 
@@ -131,48 +126,41 @@ sub vcl_fetch {
         unset beresp.http.Surrogate-Control;
         set beresp.do_esi = true;
     }
-}
-</code></pre>
+}</code></pre>
 
 <h2>Configure Symfony for ESI</h2>
 
 <p>See the Symfony2 ESI cookbook for more info. Start by turning on ESI in config.yml.</p>
 
 <pre><code>framework:
-    esi:             true
-</code></pre>
+    esi:             true</code></pre>
 
 <p>Turn on Assetic asset versioning for cache bursting. This is essential for the aggressive (expires max;) asset caching in the Nginx config. For assets not handled by Assetic (e.g. images inside CSS files) add versioning manually (e.g. logo.png?v=1).</p>
 
 <pre><code>framework:
-    templating:      { engines: ['twig'], assets_version: v1 }
-</code></pre>
+    templating:      { engines: ['twig'], assets_version: v1 }</code></pre>
 
 <p>Set sections of the website as standalone (ESI enabled). This allows various TTLs on a single page. Varnish puts each section together to construct the page before caching.</p>
 
 <pre><code>{% render 'Vendor:Bundle:controller' with {}, {'standalone': true} %} // or...
-$this-&gt;render('Vendor:Example:temp.html.twig', array('standalone' =&gt; true));
-</code></pre>
+$this-&gt;render('Vendor:Example:temp.html.twig', array('standalone' =&gt; true));</code></pre>
 
 <p>Set shared max age for responses and sections. If you set the max age (non-shared), ESI will not work because the whole page is cached.</p>
 
-<pre><code>$response-&gt;setSharedMaxAge(60);
-</code></pre>
+<pre><code>$response-&gt;setSharedMaxAge(60);</code></pre>
 
 <h2>Setup Authentication</h2>
 
 <p>Since Symfony is running on Nginx on port 8080, make these adjustments to support Symfony authentication. Firstly, in AppKernal.php, add this line before $kernel->handle():</p>
 
-<pre><code>Request::trustProxyData();
-</code></pre>
+<pre><code>Request::trustProxyData();</code></pre>
 
 <p>Also, add these changes to the Varnish VCL file:</p>
 
 <pre><code>set req.http.X-Forwarded-Port = "80";
 if (req.http.Authorization || req.http.Cookie) {
     return (pass);
-}
-</code></pre>
+}</code></pre>
 
 <h2>Test Setup</h2>
 
@@ -181,8 +169,7 @@ if (req.http.Authorization || req.http.Cookie) {
 <pre><code>sudo app/console cache:clear --env=prod --no-warmup
 sudo service nginx restart
 sudo service php5-fpm restart
-sudo service varnish restart
-</code></pre>
+sudo service varnish restart</code></pre>
 <!-- END UPDATE -->
 
 <footer>&copy; Todd Sullivan</footer>
