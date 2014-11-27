@@ -52,8 +52,7 @@
   ...
   LoadModule socache_shmcb_module libexec/apache2/mod_socache_shmcb.so
   ...
-  Include /private/etc/apache2/extra/httpd-ssl.conf
-  </code></pre>
+  Include /private/etc/apache2/extra/httpd-ssl.conf</code></pre>
 
   <h2>Create a Certificate</h2>
 
@@ -61,8 +60,7 @@
   sudo ssh-keygen -f server.nopass.key
   sudo openssl req -new -key server.nopass.key -out request.csr
   sudo openssl x509 -req -days 365 -in request.csr -signkey server.nopass.key -out server.crt
-  sudo openssl rsa -in server.nopass.key -out server.key
-  </code></pre>
+  sudo openssl rsa -in server.nopass.key -out server.key</code></pre>
 
   <h2>Configure HTTPD for SSL</h2>
 
@@ -71,8 +69,7 @@
   <p>Update these lines:</p>
 
   <pre><code>DocumentRoot '/path/to/web/folder';
-  ServerName [example].localhost
-  </code></pre>
+  ServerName [example].localhost</code></pre>
 
   <h2>Restart Apache</h2>
 

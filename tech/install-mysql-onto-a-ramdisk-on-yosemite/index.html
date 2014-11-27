@@ -50,8 +50,7 @@
   <h2>Configure MySQL for a Ramdisk</h2>
 
   <pre><code>sudo cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf
-  sudo vi /etc/my.cnf
-  </code></pre>
+  sudo vi /etc/my.cnf</code></pre>
 
   <p>Enter the following config into my.cnf:</p>
 
@@ -60,8 +59,7 @@
   default_time_zone = '+00:00'
   datadir = /Volumes/ramdisk/data
   innodb_flush_log_at_trx_commit = 2
-  innodb_data_home_dir = /Volumes/ramdisk/data
-  </code></pre>
+  innodb_data_home_dir = /Volumes/ramdisk/data</code></pre>
 
   <h2>Set Path and Aliases</h2>
 
@@ -73,8 +71,7 @@
 
   <pre><code>export PATH="/usr/local/mysql/bin:$PATH"
   alias ramdisk='/path/to/ramdisk.sh'
-  alias mysetup='/path/to/mysetup.sh'
-  </code></pre>
+  alias mysetup='/path/to/mysetup.sh'</code></pre>
 
   <pre><code>su - [username]</code></pre>
 
@@ -83,8 +80,7 @@
   <p>Create and save the ramdisk.sh script file:</p>
 
   <pre><code>diskutil erasevolume HFS+ "ramdisk" `hdiutil attach -nomount ram://2048000`
-  sudo cp -R /usr/local/mysql/data /Volumes/ramdisk/data
-  </code></pre>
+  sudo cp -R /usr/local/mysql/data /Volumes/ramdisk/data</code></pre>
 
   <p>Create and save the mysetup.sh script file:</p>
 
@@ -96,8 +92,7 @@
   mysql -u root -e "use mysql; update user set password=password('[password]') where user ='[username]';"
   mysql -u root -e "flush privileges;"
 
-  /usr/local/mysql/support-files/mysql.server restart
-  </code></pre>
+  /usr/local/mysql/support-files/mysql.server restart</code></pre>
 
   <h2>Optional: Configure PHP to use MySQL</h2>
 
@@ -106,7 +101,7 @@
   <p>Find and update this line:</p>
 
   <pre><code>pdo_mysql.default_socket=/tmp/mysql_ram.sock</code></pre>
-  
+
   <h2>Test</h2>
 
   <pre><code>ramdisk

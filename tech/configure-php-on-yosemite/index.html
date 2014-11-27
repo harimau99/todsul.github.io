@@ -52,8 +52,7 @@
 
   <p>Use vi to configure the httpd.conf file.</p>
 
-  <pre><code>sudo vi /etc/apache2/httpd.conf
-  </code></pre>
+  <pre><code>sudo vi /etc/apache2/httpd.conf</code></pre>
 
   <p>Enable PHP by uncommenting these lines:</p>
 
@@ -63,11 +62,9 @@
   <h2>Create and configure PHP</h2>
 
   <pre><code>sudo cp /etc/php.ini.default /etc/php.ini
-  sudo vi /etc/php.ini
-  </code></pre>
+  sudo vi /etc/php.ini</code></pre>
 
-  <pre><code>date.timezone = UTC
-  </code></pre>
+  <pre><code>date.timezone = UTC</code></pre>
 
   <h2>Optional: Configure Cache/Log Permissions</h2>
 
@@ -77,8 +74,7 @@
   sudo rm -rf app/cache/*
   sudo rm -rf app/logs/*
   sudo chmod +a "www allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-  sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-  </code></pre>
+  sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs</code></pre>
 
   <h2>Restart Apache</h2>
 
