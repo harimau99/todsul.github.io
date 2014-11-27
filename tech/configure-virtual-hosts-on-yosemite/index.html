@@ -44,26 +44,23 @@
 
   <p>Use vi to configure the httpd.conf file.</p>
 
-  <pre><code>sudo vi /etc/apache2/httpd.conf
-  </code></pre>
+  <pre><code>sudo vi /etc/apache2/httpd.conf</code></pre>
 
   <p>Enable virtual hosts by uncommenting these lines:</p>
 
   <pre><code>LoadModule vhost_alias_module libexec/apache2/mod_vhost_alias.so
-    ...
-    LoadModule userdir_module libexec/apache2/mod_userdir.so
-    ...
-    Include /private/etc/apache2/extra/httpd-userdir.conf
-    ...
-    Include /private/etc/apache2/extra/httpd-vhosts.conf
-  </code></pre>
+  ...
+  LoadModule userdir_module libexec/apache2/mod_userdir.so
+  ...
+  Include /private/etc/apache2/extra/httpd-userdir.conf
+  ...
+  Include /private/etc/apache2/extra/httpd-vhosts.conf</code></pre>
 
   <h2>Configure User Permissions</h2>
 
   <p>Create a conf file to give your user permissions.</p>
 
-  <pre><code>sudo vi /etc/apache2/users/[username].conf
-  </code></pre>
+  <pre><code>sudo vi /etc/apache2/users/[username].conf</code></pre>
 
   <p>Copy and paste the following into the new conf file.</p>
 
@@ -71,35 +68,30 @@
     Options FollowSymLinks Indexes MultiViews
     Require all granted
     AllowOverride All
-    &lt;/Directory&gt;
-  </code></pre>
+  &lt;/Directory&gt;</code></pre>
 
   <h2>Configure Hosts</h2>
 
   <p>Use vi to configure the hosts file.</p>
 
-  <pre><code>sudo vi /etc/hosts
-  </code></pre>
+  <pre><code>sudo vi /etc/hosts</code></pre>
 
   <p>Add a virtual hostname for each website.</p>
 
-  <pre><code>127.0.0.1 [example].localhost
-  </code></pre>
+  <pre><code>127.0.0.1 [example].localhost</code></pre>
 
   <h2>Configure Web Directory</h2>
 
   <p>Configure the virtual host directory and server name.</p>
 
-  <pre><code>sudo vi /etc/apache2/extra/httpd-vhosts.conf
-  </code></pre>
+  <pre><code>sudo vi /etc/apache2/extra/httpd-vhosts.conf</code></pre>
 
   <p>Copy and past this block for each website.</p>
 
   <pre><code>&lt;VirtualHost *:80&gt;
     DocumentRoot '/path/to/web/folder'
     ServerName [example].localhost
-    &lt;/VirtualHost&gt;
-  </code></pre>
+  &lt;/VirtualHost&gt;</code></pre>
 
   <p>Restart Apache.</p>
 
