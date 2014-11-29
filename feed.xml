@@ -1,142 +1,118 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" version="2.0">
-    <channel>
+<channel>
 
-        <title>todsul</title>
-        <atom:link href="http://todsul.com/feed.xml" rel="self" type="application/rss+xml" />
-        <description>Todsul - Startups, Adventure, Tech</description>
-        <link>http://todsul.com</link>
-        <lastBuildDate>03 Sep 2013 12:00:00 +0000</lastBuildDate>
-        <pubDate>03 Sep 2013 12:00:00 +0000</pubDate>
-        <ttl>1800</ttl>
+<title>todsul</title>
+<atom:link href="http://todsul.com/feed.xml" rel="self" type="application/rss+xml" />
+<description>Todsul - Startups, Adventure, Tech</description>
+<link>http://todsul.com</link>
+<lastBuildDate>29 Nov 2014 12:00:00 +0000</lastBuildDate>
+<pubDate>29 Nov 2014 12:00:00 +0000</pubDate>
+<ttl>1800</ttl>
 
-        <item>
-          <title>Configure HTTPS and SSL on Yosemite</title>
-          <description>This is the simplest way to run HTTPS/SSL on Apache 2.4 on Yosemite. It differs substantially from the setup on Mavericks, but it is still quite simple.</description>
-          <link>http://todsul.com/tech/configure-https-and-ssl-on-yosemite</link>
-          <guid>http://todsul.com/tech/configure-https-and-ssl-on-yosemite</guid>
-          <pubDate>27 Nov 2014 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Configure PHP, MYSQL (on Ramdisk) and SSL on Yosemite</title>
+<description>This is a no nonsense guide to setting up virtual hosting, PHP, MySQL and SSL on Mac OS X 10.10 (Yosemite). It sets up a ramdisk for MySQL so test suites run faster and without placing unecessary load on SSDs.</description>
+<link>http://todsul.com/tech/configure-php-mysql-ssl-on-yosemite</link>
+<guid>http://todsul.com/tech/configure-php-mysql-ssl-on-yosemite</guid>
+<pubDate>29 Nov 2014 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-          <title>Install MySQL onto a Ramdisk on Yosemite</title>
-          <description>This is the simplest way to run MySQL on a ramdisk on Yosemite. Doing so makes running tests considerably faster and helps preserve your SSD; due to less IO hitting the SSD.</description>
-          <link>http://todsul.com/tech/install-mysql-onto-a-ramdisk-on-yosemite</link>
-          <guid>http://todsul.com/tech/install-mysql-onto-a-ramdisk-on-yosemite</guid>
-          <pubDate>27 Nov 2014 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Value, Experience, Growth</title>
+<description>We make sure everything we do at Flightfox is related to one of three categories: value, experience or growth. This provides a litmus test to ensure we're working on the most impactful ideas at any one time.</description>
+<link>http://todsul.com/startups/value-experience-growth</link>
+<guid>http://todsul.com/startups/value-experience-growth</guid>
+<pubDate>03 Sep 2013 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-          <title>Configure PHP on Yosemite</title>
-          <description>The move from Mavericks to Yosemite includes a move from Apache 2.2 to 2.4. The setup for virtual hosts on 2.4 is the basically the same as with Mavericks.</description>
-          <link>http://todsul.com/tech/configure-php-on-yosemite</link>
-          <guid>http://todsul.com/tech/configure-php-on-yosemite</guid>
-          <pubDate>27 Nov 2014 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>About This Website</title>
+<description>I use this website to test technical ideas and concepts that may make it to Flightfox. Some of it's for performance, some just for fun. See below for a list of the, albeit rudimentary, concepts tested.</description>
+<link>http://todsul.com/tech/about-this-website</link>
+<guid>http://todsul.com/tech/about-this-website</guid>
+<pubDate>20 Jul 2013 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-          <title>Configure Virtual Hosts on Yosemite</title>
-          <description>The move from Mavericks to Yosemite includes a move from Apache 2.2 to 2.4. The setup for virtual hosts on 2.4 is a little different, which I describe using the simplest steps possible.</description>
-          <link>http://todsul.com/tech/configure-virtual-hosts-on-yosemite</link>
-          <guid>http://todsul.com/tech/configure-virtual-hosts-on-yosemite</guid>
-          <pubDate>27 Nov 2014 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Configure Symfony on OS X</title>
+<description>This is to setup Apache, MySQL and PHP for Symfony on Mac OS X. It includes setting up a virtual host, self-signed SSL certificate, git repository, and the database on ramdisk to increase PHPUnit speed.</description>
+<link>http://todsul.com/tech/install-and-configure-symfony-on-os-x</link>
+<guid>http://todsul.com/tech/install-and-configure-symfony-on-os-x</guid>
+<pubDate>05 May 2013 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Value, Experience, Growth</title>
-            <description>We make sure everything we do at Flightfox is related to one of three categories: value, experience or growth. This provides a litmus test to ensure we're working on the most impactful ideas at any one time.</description>
-            <link>http://todsul.com/startups/value-experience-growth</link>
-            <guid>http://todsul.com/startups/value-experience-growth</guid>
-            <pubDate>03 Sep 2013 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Configuration Options for Nginx and Varnish</title>
+<description>Nginx's architecture makes it great for handling high load. While Varnish was designed specifically for speed. Let's take a look at the possible configurations of Nginx and Varnish.</description>
+<link>http://todsul.com/tech/configuration-options-with-nginx-and-varnish</link>
+<guid>http://todsul.com/tech/configuration-options-with-nginx-and-varnish</guid>
+<pubDate>13 Apr 2013 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>About This Website</title>
-            <description>I use this website to test technical ideas and concepts that may make it to Flightfox. Some of it's for performance, some just for fun. See below for a list of the, albeit rudimentary, concepts tested.</description>
-            <link>http://todsul.com/tech/about-this-website</link>
-            <guid>http://todsul.com/tech/about-this-website</guid>
-            <pubDate>20 Jul 2013 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Configure Symfony and Varnish for ESI</title>
+<description>Edge-Side Includes allow you to cache dynamic content with various timeouts per segment. Varnish supports ESI out of the box. Let's look at how to configure the two for an optimal partial-caching strategy.</description>
+<link>http://todsul.com/tech/configure-symfony-and-varnish-for-esi</link>
+<guid>http://todsul.com/tech/configure-symfony-and-varnish-for-esi</guid>
+<pubDate>13 Feb 2013 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Install and Configure Symfony on OS X</title>
-            <description>This is to setup Apache, MySQL and PHP for Symfony on Mac OS X. It includes setting up a virtual host, self-signed SSL certificate, git repository, and the database on ramdisk to increase PHPUnit speed.</description>
-            <link>http://todsul.com/tech/install-and-configure-symfony-on-os-x</link>
-            <guid>http://todsul.com/tech/install-and-configure-symfony-on-os-x</guid>
-            <pubDate>05 May 2013 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Test with Apache Bench</title>
+<description>Apache Bench is an easy-to-use tool for load testing and is available in most Linux distros. This article shows how to setup three tests: a static file test, a dynamic file (PHP) test, and a database (MySQL) access test.</description>
+<link>http://todsul.com/tech/install-and-test-with-apache-bench</link>
+<guid>http://todsul.com/tech/install-and-test-with-apache-bench</guid>
+<pubDate>05 Jan 2012 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Configuration Options for Nginx and Varnish</title>
-            <description>Nginx's architecture makes it great for handling high load. While Varnish was designed specifically for speed. Let's take a look at the possible configurations of Nginx and Varnish.</description>
-            <link>http://todsul.com/tech/configuration-options-with-nginx-and-varnish</link>
-            <guid>http://todsul.com/tech/configuration-options-with-nginx-and-varnish</guid>
-            <pubDate>13 Apr 2013 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Configure Varnish with Nginx</title>
+<description>Varnish is an HTTP accelerator (reverse proxy, load balancer, etc) with ESI capbilities. It serves cached content from memory, which helps to reduce load on web servers and databases. Let's install Varnish.</description>
+<link>http://todsul.com/tech/install-and-configure-varnish-with-nginx</link>
+<guid>http://todsul.com/tech/install-and-configure-varnish-with-nginx</guid>
+<pubDate>12 Dec 2011 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Configure Symfony and Varnish for ESI</title>
-            <description>Edge-Side Includes allow you to cache dynamic content with various timeouts per segment. Varnish supports ESI out of the box. Let's look at how to configure the two for an optimal partial-caching strategy.</description>
-            <link>http://todsul.com/tech/configure-symfony-and-varnish-for-esi</link>
-            <guid>http://todsul.com/tech/configure-symfony-and-varnish-for-esi</guid>
-            <pubDate>13 Feb 2013 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Configure APC</title>
+<description>The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. While it works out-of-the-box, it's important to configure it correctly. This shows how to setup APC and increase its efficiency.</description>
+<link>http://todsul.com/tech/install-and-configure-apc</link>
+<guid>http://todsul.com/tech/install-and-configure-apc</guid>
+<pubDate>19 Aug 2011 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Install and Test with Apache Bench</title>
-            <description>Apache Bench is an easy-to-use tool for load testing and is available in most Linux distros. This article shows how to setup three tests: a static file test, a dynamic file (PHP) test, and a database (MySQL) access test.</description>
-            <link>http://todsul.com/tech/install-and-test-with-apache-bench</link>
-            <guid>http://todsul.com/tech/install-and-test-with-apache-bench</guid>
-            <pubDate>05 Jan 2012 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Configure MySQL</title>
+<description>This shows how to install and configure MySQL server on a Linux server. It includes setting up users andprivileges, moving databases between servers, and imposing UTF-8 across the board.</description>
+<link>http://todsul.com/tech/install-and-configure-mysql</link>
+<guid>http://todsul.com/tech/install-and-configure-mysql</guid>
+<pubDate>25 Jul 2011 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Install and Configure Varnish with Nginx</title>
-            <description>Varnish is an HTTP accelerator (reverse proxy, load balancer, etc) with ESI capbilities. It serves cached content from memory, which helps to reduce load on web servers and databases. Let's install Varnish.</description>
-            <link>http://todsul.com/tech/install-and-configure-varnish-with-nginx</link>
-            <guid>http://todsul.com/tech/install-and-configure-varnish-with-nginx</guid>
-            <pubDate>12 Dec 2011 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Configure PHP-FPM on Nginx</title>
+<description>PHP-FPM (FastCGI Process Manager) is an FastCGI implementation with additional features especially useful for high-load websites. It makes running PHP particularly easy on Nginx.</description>
+<link>http://todsul.com/tech/install-and-configure-php-fpm-on-nginx</link>
+<guid>http://todsul.com/tech/install-and-configure-php-fpm-on-nginx</guid>
+<pubDate>28 Mar 2011 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Install and Configure APC</title>
-            <description>The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. While it works out-of-the-box, it's important to configure it correctly. This shows how to setup APC and increase its efficiency.</description>
-            <link>http://todsul.com/tech/install-and-configure-apc</link>
-            <guid>http://todsul.com/tech/install-and-configure-apc</guid>
-            <pubDate>19 Aug 2011 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Install and Configure Nginx</title>
+<description>Nginx [engine x] is an HTTP and reverse proxy server, as well as a mail proxy server, written by Igor Sysoev. Due to its high performance out-of-the-box, it's become one of the world's most popular web servers.</description>
+<link>http://todsul.com/tech/install-and-configure-nginx</link>
+<guid>http://todsul.com/tech/install-and-configure-nginx</guid>
+<pubDate>03 Nov 2010 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Install and Configure MySQL</title>
-            <description>This shows how to install and configure MySQL server on a Linux server. It includes setting up users andprivileges, moving databases between servers, and imposing UTF-8 across the board.</description>
-            <link>http://todsul.com/tech/install-and-configure-mysql</link>
-            <guid>http://todsul.com/tech/install-and-configure-mysql</guid>
-            <pubDate>25 Jul 2011 12:00:00 +0000</pubDate>
-        </item>
+<item>
+<title>Prepare Ubuntu for Web Hosting</title>
+<description>This is a basic low-security setup guide of Ubuntu Server for web hosting. It includes creating a user account, setting up IP Tables, configuring the timezone, and running a full update.</description>
+<link>http://todsul.com/tech/prepare-ubuntu-for-web-hosting</link>
+<guid>http://todsul.com/tech/prepare-ubuntu-for-web-hosting</guid>
+<pubDate>01 Sep 2010 12:00:00 +0000</pubDate>
+</item>
 
-        <item>
-            <title>Install and Configure PHP-FPM on Nginx</title>
-            <description>PHP-FPM (FastCGI Process Manager) is an FastCGI implementation with additional features especially useful for high-load websites. It makes running PHP particularly easy on Nginx.</description>
-            <link>http://todsul.com/tech/install-and-configure-php-fpm-on-nginx</link>
-            <guid>http://todsul.com/tech/install-and-configure-php-fpm-on-nginx</guid>
-            <pubDate>28 Mar 2011 12:00:00 +0000</pubDate>
-        </item>
-
-        <item>
-            <title>Install and Configure Nginx</title>
-            <description>Nginx [engine x] is an HTTP and reverse proxy server, as well as a mail proxy server, written by Igor Sysoev. Due to its high performance out-of-the-box, it's become one of the world's most popular web servers.</description>
-            <link>http://todsul.com/tech/install-and-configure-nginx</link>
-            <guid>http://todsul.com/tech/install-and-configure-nginx</guid>
-            <pubDate>03 Nov 2010 12:00:00 +0000</pubDate>
-        </item>
-
-        <item>
-            <title>Prepare Ubuntu for Web Hosting</title>
-            <description>This is a basic low-security setup guide of Ubuntu Server for web hosting. It includes creating a user account, setting up IP Tables, configuring the timezone, and running a full update.</description>
-            <link>http://todsul.com/tech/prepare-ubuntu-for-web-hosting</link>
-            <guid>http://todsul.com/tech/prepare-ubuntu-for-web-hosting</guid>
-            <pubDate>01 Sep 2010 12:00:00 +0000</pubDate>
-        </item>
-
-    </channel>
+</channel>
 </rss>
