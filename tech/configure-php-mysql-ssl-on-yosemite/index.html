@@ -41,10 +41,11 @@
 <p>This is to setup virtual hosting, PHP, MySQL on ramdisk, and SSL on Mac OS X 10.10 (Yosemite).</p>
 
 <ol>
-  <li><a href="#step1">[View]</a> Step 1. Configure Virtual Hosting</li>
-  <li><a href="#step2">[View]</a> Step 2. Configure PHP</li>
-  <li><a href="#step3">[View]</a> Step 3. Configure SSL</li>
-  <li><a href="#step4">[View]</a> Step 4. Install MySQL onto a Ramdisk</li>
+<li><a href="#step1">[View]</a> Step 1. Configure Virtual Hosting</li>
+<li><a href="#step2">[View]</a> Step 2. Configure PHP</li>
+<li><a href="#step3">[View]</a> Step 3. Configure SSL</li>
+<li><a href="#step4">[View]</a> Step 4. Install MySQL onto a Ramdisk</li>
+<li><a href="#step5">[View]</a> Step 5. Extras</li>
 </ol>
 
 <h2 id="step1">Step 1. Configure Virtual Hosting</h2>
@@ -90,7 +91,7 @@ AllowOverride All
 <p>Copy, paste and configure the following lines:</p>
 
 <pre><code>&lt;VirtualHost *:80&gt;
-DocumentRoot '/path/to/web/folder'
+DocumentRoot "/path/to/web/folder"
 ServerName [example].localhost
 &lt;/VirtualHost&gt;</code></pre>
 
@@ -165,7 +166,7 @@ sudo openssl rsa -in server.nopass.key -out server.key</code></pre>
 
 <p>Remove existing blocks, then add and configure these lines:</p>
 
-<pre><code>DocumentRoot '/path/to/web/folder';
+<pre><code>DocumentRoot "/path/to/web/folder";
 ServerName [example].localhost</code></pre>
 
 <p>Restart Apache:</p>
@@ -204,8 +205,8 @@ innodb_data_home_dir = /Volumes/ramdisk/data</code></pre>
 <p>Add these lines to the file:</p>
 
 <pre><code>export PATH="/usr/local/mysql/bin:$PATH"
-alias ramdisk='/path/to/ramdisk.sh'
-alias mysetup='/path/to/mysetup.sh'</code></pre>
+alias ramdisk="/path/to/ramdisk.sh"
+alias mysetup="/path/to/mysetup.sh"</code></pre>
 
 <p>Reload your profile:</p>
 
@@ -240,6 +241,33 @@ mysql -u root -e "flush privileges;"
 
 <pre><code>ramdisk
 mysetup</code></pre>
+
+<h2 id="step5">Step 5. Extras</h2>
+
+<p>Install and configure git:</p>
+
+<pre><code>git</code></pre>
+
+<p>Follow propmts to install command line tools, then configure git as follows:</p>
+
+<pre><code>git config --global user.name 'username'
+git config --global user.email 'email'</code></pre>
+
+<p>Save credentials in the keychain:</p>
+
+<pre><code>git config --global credential.helper osxkeychain</code></pre>
+
+<p>Configure user to not require password:</p>
+
+<pre><code>sudo visudo</code></pre>
+
+<p>Then add this ine under the admin user:</p>
+
+<pre><code>[username] ALL=(ALL) NOPASSWD: ALL</code></pre>
+
+<p>Install Java for various tools:</p>
+
+<pre><code>http://support.apple.com/kb/dl1572</code></pre>
 <!-- END UPDATE -->
 
 <footer>&copy; Todd Sullivan</footer>
