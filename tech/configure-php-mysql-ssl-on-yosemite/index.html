@@ -8,8 +8,8 @@
 <meta name="author" content="Todd Sullivan"/>
 
 <!-- START UPDATE -->
-<meta name="description" content="Configure PHP, MYSQL (on Ramdisk) and SSL on Yosemite">
-<title>Configure PHP, MYSQL (on Ramdisk) and SSL on Yosemite</title>
+<meta name="description" content="Configure PHP, MYSQL and SSL on Yosemite">
+<title>Configure PHP, MYSQL and SSL on Yosemite</title>
 <!-- END UPDATE -->
 
 <link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
@@ -31,7 +31,7 @@
 <header>
 
 <!-- START UPDATE -->
-<h1>Configure PHP, MYSQL (on Ramdisk) and SSL on Yosemite</h1>
+<h1>Configure PHP, MYSQL and SSL on Yosemite</h1>
 <time datetime="2014-11-29" pubdate>November 2014</time>
 <!-- END UPDATE -->
 
@@ -152,7 +152,7 @@ sudo openssl req -new -key server.nopass.key -out request.csr
 sudo openssl x509 -req -days 365 -in request.csr -signkey server.nopass.key -out server.crt
 sudo openssl rsa -in server.nopass.key -out server.key</code></pre>
 
-<h2>Open the SSL httpd config file:</h2>
+<p>Open the SSL httpd config file:</p>
 
 <pre><code>sudo vi /etc/apache2/extra/httpd-ssl.conf</code></pre>
 
@@ -229,7 +229,7 @@ mysql -u root -e "flush privileges;"
 
 <pre><code>pdo_mysql.default_socket=/tmp/mysql_ram.sock</code></pre>
 
-<p>Run the scripts using the aliases to create the ramdisk and setup the database:</p>
+<p>Run the scripts to create the ramdisk and setup the database:</p>
 
 <pre><code>ramdisk
 mysetup</code></pre>

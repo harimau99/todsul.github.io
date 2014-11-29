@@ -11,7 +11,7 @@
 <ttl>1800</ttl>
 
 <item>
-<title>Configure PHP, MYSQL (on Ramdisk) and SSL on Yosemite</title>
+<title>Configure PHP, MYSQL and SSL on Yosemite</title>
 <description>This is a no nonsense guide to setting up virtual hosting, PHP, MySQL and SSL on Mac OS X 10.10 (Yosemite). It sets up a ramdisk for MySQL so test suites run faster and without placing unecessary load on SSDs.</description>
 <link>http://todsul.com/tech/configure-php-mysql-ssl-on-yosemite</link>
 <guid>http://todsul.com/tech/configure-php-mysql-ssl-on-yosemite</guid>
