@@ -64,6 +64,14 @@ Include /private/etc/apache2/extra/httpd-userdir.conf
 ...
 Include /private/etc/apache2/extra/httpd-vhosts.conf</code></pre>
 
+<p>Open the userdir file:</p>
+
+<pre><code>sudo vi /private/etc/apache2/extra/httpd-userdir.conf</code></pre>
+
+<p>Uncomment these lines:</p>
+
+<pre><code>Include /private/etc/apache2/users/*.conf</code></pre>
+
 <p>Create a file for user permissions:</p>
 
 <pre><code>sudo vi /etc/apache2/users/[username].conf</code></pre>
