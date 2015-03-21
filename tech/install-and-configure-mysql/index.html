@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Todd Sullivan"/>
+
+<!-- START UPDATE -->
+<meta name="description" content="Install and Configure MySQL">
+<title>Install and Configure MySQL</title>
+<!-- END UPDATE -->
+
+<link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+<link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+<section id="social">
+<div class="line"></div>
+<a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+<a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+<a href="/feed.xml" target="_blank"><i>r</i></a>
+</section>
+
+<a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+<header>
+
+<!-- START UPDATE -->
+<h1>Install and Configure MySQL</h1>
+<time datetime="2011-08-19" pubdate>2011-08-19</time>
+<!-- END UPDATE -->
+
+</header>
+
+<!-- START UPDATE -->
+<p>This shows how to install and configure MySQL server on a Linux server. It includes setting up users andprivileges, moving databases between servers, and imposing UTF-8 across the board.</p>
+
+<h2>Install MySQL and PHP5 support</h2>
+
+<p><code>
+sudo aptitude update
+sudo aptitude install mysql-server
+sudo aptitude install php5-mysql
+</code></p>
+
+<h2>Secure MySQL and Login</h2>
+
+<p>Choose yes for all questions, except to change the root password.</p>
+
+<p><code>
+sudo mysql_secure_installation
+mysql -u root -p
+</code></p>
+
+<p>If necessary, add the mysql path (/usr/local/mysql/bin) to the profile and refresh.</p>
+
+<p><code>
+cd
+vi  ~/.profile
+. ./.profile
+echo $PATH
+</code></p>
+
+<h2>Create a database</h2>
+
+<p>Change the root password, create database and users, give privileges.</p>
+
+<p><code>
+mysqladmin -u root password [newpassword]
+mysql -u root -p [password]
+create database mytest;
+create user 'username' identified by 'password';
+grant all privileges on *.* to username@localhost;
+flush privileges;
+exit
+</code></p>
+
+<h2>Export a Database</h2>
+
+<p>Switch to the superuser to avoid any permissions issues.</p>
+
+<p><code>
+sudo su -
+mysqldump -u [user] -p [database] &amp;gt; [filename].sql
+</code></p>
+
+<h2>Import a Database</h2>
+
+<p>For smaller files, import from the unix shell.</p>
+
+<p><code>
+mysql -u [user] -p [database] &amp;lt; [filename].sql
+</code></p>
+
+<p>For larger files, use the source command inside mysql.</p>
+
+<p><code>
+mysql -u [user] -p
+use [database]
+source &amp;lt; [file].sql
+</code></p>
+
+<h2>Set Charset</h2>
+
+<p>We want end-to-end UTF8.</p>
+
+<p><code>
+ALTER DATABASE DEFAULT CHARACTER SET utf8;
+ALTER TABLE [exampletable] DEFAULT CHARACTER SET utf8;
+</code></p>
+
+<!-- END UPDATE -->
+
+<footer>&copy; Todd Sullivan</footer>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-40661262-1', 'todsul.com');
+ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>

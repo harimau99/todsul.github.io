@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Todd Sullivan"/>
+
+<!-- START UPDATE -->
+<meta name="description" content="Prepare Ubuntu for Web Hosting">
+<title>Prepare Ubuntu for Web Hosting</title>
+<!-- END UPDATE -->
+
+<link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+<link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+<section id="social">
+<div class="line"></div>
+<a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+<a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+<a href="/feed.xml" target="_blank"><i>r</i></a>
+</section>
+
+<a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+<header>
+
+<!-- START UPDATE -->
+<h1>Prepare Ubuntu for Web Hosting</h1>
+<time datetime="2010-09-11" pubdate>2010-09-11</time>
+<!-- END UPDATE -->
+
+</header>
+
+<!-- START UPDATE -->
+<p>This is a basic low-security setup guide of Ubuntu Server for web hosting. It includes creating a user account, setting up IP Tables, configuring the timezone, and running a full update.</p>
+
+<h2>Remove Old Keys</h2>
+
+<p>This is required if the client computer has keys linked to a previous build. Find the IP address in the Linode control panel under the remote access tab and run the following command.</p>
+
+<p><code>
+ssh-keygen -R [server_ip]
+</code></p>
+
+<h2>Login using SSH</h2>
+
+<p>Remote into the node using the root password you chose when rebuilding the node.</p>
+
+<p><code>
+ssh root@[server_ip]
+</code></p>
+
+<h2>Configure Hostname</h2>
+
+<p>Use vi to edit files. Search Google to find basic commands.</p>
+
+<p><code>
+echo &quot;[hostname]&quot; &amp;gt; /etc/hostname
+hostname -F /etc/hostname
+vi /etc/hosts
+</code></p>
+
+<p>Add the second line to your hosts files.</p>
+
+<p><code>
+127.0.0.1 localhost.localdomain localhost
+[server_ip] [hostname].example.com [hostname]
+</code></p>
+
+<h2>Create User Account</h2>
+
+<p>Create a user and give it ALL permissions.</p>
+
+<p><code>
+/usr/sbin/adduser [username]
+visudo
+</code></p>
+
+<p>Add this line to the file.</p>
+
+<p><code>
+[username] ALL=(ALL) ALL
+</code></p>
+
+<h2>Configure SSH over PKA</h2>
+
+<p>Generate a local public key and push it to the server.</p>
+
+<p><code>
+ssh-keygen
+scp ~/.ssh/id_rsa.pub root@example.com:/home/[user]
+</code></p>
+
+<p>Copy the key to .ssh and rename to authorized_keys</p>
+
+<p><code>
+cd ~/
+mkdir .ssh
+sudo mv id_rsa.pub .ssh/authorized_keys
+</code></p>
+
+<h2>Setup Firewall</h2>
+
+<p>Use iptables as a firewall to manage port access and store rules in a file.</p>
+
+<p><code>
+sudo /sbin/iptables -F
+sudo vi /etc/iptables.up.rules
+</code></p>
+
+<p>These rules allow loopback, established, outbound, HTTP, HTTPS, SSH and ping traffic.</p>
+
+<p><code>
+* filter
+-A INPUT -i lo -j ACCEPT
+-A INPUT ! -i lo -d 127.0.0.0/8 -j REJECT
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A OUTPUT -j ACCEPT
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix &quot;iptables denied: &quot; --log-level 7
+-A INPUT -j REJECT
+-A FORWARD -j REJECT
+COMMIT
+</code></p>
+
+<p>Import the settings file and create the script to re-import the rules on restart.</p>
+
+<p><code>
+sudo /sbin/iptables-restore &amp;lt; /etc/iptables.up.rules
+sudo /sbin/iptables -L
+sudo vi /etc/network/if-pre-up.d/iptables
+</code></p>
+
+<p>Add these lines to the script file.</p>
+
+<p>```</p>
+
+<h1>!/bin/sh</h1>
+
+<p>/sbin/iptables-restore &lt; /etc/iptables.up.rules
+```</p>
+
+<p>Add execute permissions to the script, reboot, then login over SSH as our new user to test the firewall. Start commands with sudo when you login as the new user.</p>
+
+<p><code>
+sudo chmod +x /etc/network/if-pre-up.d/iptables
+sudo reboot
+ssh [username]@[server_ip]
+sudo /sbin/iptables -L
+</code></p>
+
+<h2>Set Timezone</h2>
+
+<p>Set the timezone to where most users reside. UTC is a good choice.</p>
+
+<p><code>
+sudo dpkg-reconfigure tzdata
+</code></p>
+
+<h2>Update and Upgrade</h2>
+
+<p>As a new build, update our repository source list and run any necessary upgrades.</p>
+
+<p><code>
+sudo aptitude update
+sudo aptitude full-upgrade
+</code></p>
+
+<!-- END UPDATE -->
+
+<footer>&copy; Todd Sullivan</footer>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-40661262-1', 'todsul.com');
+ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>

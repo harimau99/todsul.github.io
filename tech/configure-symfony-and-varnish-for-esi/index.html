@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Todd Sullivan"/>
+
+<!-- START UPDATE -->
+<meta name="description" content="Configure Symfony and Varnish for ESI">
+<title>Configure Symfony and Varnish for ESI</title>
+<!-- END UPDATE -->
+
+<link rel="stylesheet" type="text/css" href="/assets/18/css/main.css">
+<link rel="alternate" type="application/rss+xml" title="Todsul - Startups, Adventure, Tech" href="http://todsul.com/feed.xml">
+
+</head>
+
+<body>
+
+<section id="social">
+<div class="line"></div>
+<a href="https://twitter.com/todsul" target="_blank" rel="nofollow"><i>t</i></a>
+<a href="http://dribbble.com/todsul" target="_blank" rel="nofollow"><i>d</i></a>
+<a href="/feed.xml" target="_blank"><i>r</i></a>
+</section>
+
+<a id="logo" href="/"><img src="/assets/18/image/fox.svg" alt="Todsul Blog"></a>
+
+<header>
+
+<!-- START UPDATE -->
+<h1>Configure Symfony and Varnish for ESI</h1>
+<time datetime="2012-02-13" pubdate>2012-02-13</time>
+<!-- END UPDATE -->
+
+</header>
+
+<!-- START UPDATE -->
+<p>Edge-Side Includes allow you to cache dynamic content with various timeouts per segment. Varnish supports ESI out of the box. Let's look at how to configure the two for an optimal partial-caching strategy.</p>
+
+<h2>Deploy VEMAP Stack</h2>
+
+<p>Install Varnish, Nginx, MySQL, APC and PHP.</p>
+
+<h2>Move Files and Database</h2>
+
+<p>Rather than FTP'ing files individually, archive all prod files, upload the archive and unzip insitu. Once unzipped, set write permissions for the cache and logs directories.</p>
+
+<p><code>
+cd /srv/www/example.com
+sudo unzip Archive.zip
+sudo chown [user] /srv/www/example.com
+sudo chmod -R 777 /srv/www/example.com/app/cache
+sudo chmod -R 777 /srv/www/example.com/app/logs
+</code></p>
+
+<h2>Setup Resources</h2>
+
+<p>The Assetic asset dump requires Java. Without Java installed, run the dump locally and upload the files. The asset:install works fine though.</p>
+
+<p><code>
+cd /srv/www/example.com
+app/console assetic:dump
+app/console assets:install --symlink web
+</code></p>
+
+<h2>Configure Nginx for Symfony</h2>
+
+<p>At a minimum, the config should achieve the following:</p>
+
+<ul>
+<li>Send requests to the Symfony front controller</li>
+<li>Abstract the 8080 port for the application and user</li>
+<li>Turn off access logging for better performance</li>
+<li>Rewrite trailing slash for URL canonicalization</li>
+<li>Use Unix sockets for better performance (debateable)</li>
+<li>Set Cache Control headers on static files</li>
+</ul>
+
+<p>Open the Nginx config.</p>
+
+<p><code>
+sudo vi /etc/nginx/sites-available/example.com
+</code></p>
+
+<p>Copy and paste the following:</p>
+
+<p><code>
+index app.php;
+access_log off;
+server {
+    listen 8080;
+    server_name www.example.com;
+    rewrite ^ $scheme://example.com$request_uri? permanent;
+}
+server {
+    listen 8080;
+    server_name example.com;
+    error_log /srv/www/example.com/logs/error.log;
+    rewrite ^/(.*)/$ /$1 permanent;
+    root /srv/www/example.com/web;
+    location / {
+        try_files $uri $uri/ /app.php;
+    }
+    location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+        expires max;
+        add_header Cache-Control &quot;public, must-revalidate, proxy-revalidate&quot;;
+    }
+    location ~ \.php$ {
+        try_files $uri = 404;
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_param  SERVER_PORT 80;
+    }
+}
+</code></p>
+
+<h2>Configure Varnish for Symfony</h2>
+
+<p>Remove any cookie manipulation and add ESI handling.</p>
+
+<p><code>
+sudo vi /etc/varnish/default.vcl
+</code></p>
+
+<p>Copy and paste the following:</p>
+
+<p><code>
+sub vcl_recv {
+    set req.http.Surrogate-Capability = &quot;abc=ESI/1.0&quot;;
+}
+sub vcl_fetch {
+    if (beresp.http.Surrogate-Control ~ &quot;ESI/1.0&quot;) {
+        unset beresp.http.Surrogate-Control;
+        set beresp.do_esi = true;
+    }
+}
+</code></p>
+
+<h2>Configure Symfony for ESI</h2>
+
+<p>See the Symfony2 ESI cookbook for more info. Start by turning on ESI in config.yml.</p>
+
+<p><code>
+framework:
+    esi:             true
+</code></p>
+
+<p>Turn on Assetic asset versioning for cache bursting. This is essential for the aggressive (expires max;) asset caching in the Nginx config. For assets not handled by Assetic (e.g. images inside CSS files) add versioning manually (e.g. logo.png?v=1).</p>
+
+<p><code>
+framework:
+    templating:      { engines: ['twig'], assets_version: v1 }
+</code></p>
+
+<p>Set sections of the website as standalone (ESI enabled). This allows various TTLs on a single page. Varnish puts each section together to construct the page before caching.</p>
+
+<p><code>
+{% render 'Vendor:Bundle:controller' with {}, {'standalone': true} %} // or...
+$this-&amp;gt;render('Vendor:Example:temp.html.twig', array('standalone' =&amp;gt; true));
+</code></p>
+
+<p>Set shared max age for responses and sections. If you set the max age (non-shared), ESI will not work because the whole page is cached.</p>
+
+<p><code>
+$response-&amp;gt;setSharedMaxAge(60);
+</code></p>
+
+<h2>Setup Authentication</h2>
+
+<p>Since Symfony is running on Nginx on port 8080, make these adjustments to support Symfony authentication. Firstly, in AppKernal.php, add this line before $kernel-&gt;handle():</p>
+
+<p><code>
+Request::trustProxyData();
+</code></p>
+
+<p>Also, add these changes to the Varnish VCL file:</p>
+
+<p><code>
+set req.http.X-Forwarded-Port = &quot;80&quot;;
+if (req.http.Authorization || req.http.Cookie) {
+    return (pass);
+}
+</code></p>
+
+<h2>Test Setup</h2>
+
+<p>Clear all caches, restart services and test.</p>
+
+<p><code>
+sudo app/console cache:clear --env=prod --no-warmup
+sudo service nginx restart
+sudo service php5-fpm restart
+sudo service varnish restart
+</code></p>
+
+<!-- END UPDATE -->
+
+<footer>&copy; Todd Sullivan</footer>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-40661262-1', 'todsul.com');
+ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>
