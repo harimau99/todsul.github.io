@@ -44,80 +44,70 @@
 
 <p>This is required if the client computer has keys linked to a previous build. Find the IP address in the Linode control panel under the remote access tab and run the following command.</p>
 
-<p><code>
-ssh-keygen -R [server_ip]
-</code></p>
+<pre><code>ssh-keygen -R [server_ip]
+</code></pre>
 
 <h2>Login using SSH</h2>
 
 <p>Remote into the node using the root password you chose when rebuilding the node.</p>
 
-<p><code>
-ssh root@[server_ip]
-</code></p>
+<pre><code>ssh root@[server_ip]
+</code></pre>
 
 <h2>Configure Hostname</h2>
 
 <p>Use vi to edit files. Search Google to find basic commands.</p>
 
-<p><code>
-echo &quot;[hostname]&quot; &amp;gt; /etc/hostname
+<pre><code>echo &quot;[hostname]&quot; &amp;gt; /etc/hostname
 hostname -F /etc/hostname
 vi /etc/hosts
-</code></p>
+</code></pre>
 
 <p>Add the second line to your hosts files.</p>
 
-<p><code>
-127.0.0.1 localhost.localdomain localhost
+<pre><code>127.0.0.1 localhost.localdomain localhost
 [server_ip] [hostname].example.com [hostname]
-</code></p>
+</code></pre>
 
 <h2>Create User Account</h2>
 
 <p>Create a user and give it ALL permissions.</p>
 
-<p><code>
-/usr/sbin/adduser [username]
+<pre><code>/usr/sbin/adduser [username]
 visudo
-</code></p>
+</code></pre>
 
 <p>Add this line to the file.</p>
 
-<p><code>
-[username] ALL=(ALL) ALL
-</code></p>
+<pre><code>[username] ALL=(ALL) ALL
+</code></pre>
 
 <h2>Configure SSH over PKA</h2>
 
 <p>Generate a local public key and push it to the server.</p>
 
-<p><code>
-ssh-keygen
+<pre><code>ssh-keygen
 scp ~/.ssh/id_rsa.pub root@example.com:/home/[user]
-</code></p>
+</code></pre>
 
 <p>Copy the key to .ssh and rename to authorized_keys</p>
 
-<p><code>
-cd ~/
+<pre><code>cd ~/
 mkdir .ssh
 sudo mv id_rsa.pub .ssh/authorized_keys
-</code></p>
+</code></pre>
 
 <h2>Setup Firewall</h2>
 
 <p>Use iptables as a firewall to manage port access and store rules in a file.</p>
 
-<p><code>
-sudo /sbin/iptables -F
+<pre><code>sudo /sbin/iptables -F
 sudo vi /etc/iptables.up.rules
-</code></p>
+</code></pre>
 
 <p>These rules allow loopback, established, outbound, HTTP, HTTPS, SSH and ping traffic.</p>
 
-<p><code>
-* filter
+<pre><code>* filter
 -A INPUT -i lo -j ACCEPT
 -A INPUT ! -i lo -d 127.0.0.0/8 -j REJECT
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -130,50 +120,43 @@ sudo vi /etc/iptables.up.rules
 -A INPUT -j REJECT
 -A FORWARD -j REJECT
 COMMIT
-</code></p>
+</code></pre>
 
 <p>Import the settings file and create the script to re-import the rules on restart.</p>
 
-<p><code>
-sudo /sbin/iptables-restore &amp;lt; /etc/iptables.up.rules
+<pre><code>sudo /sbin/iptables-restore &amp;lt; /etc/iptables.up.rules
 sudo /sbin/iptables -L
 sudo vi /etc/network/if-pre-up.d/iptables
-</code></p>
+</code></pre>
 
 <p>Add these lines to the script file.</p>
 
-<p>```</p>
-
-<h1>!/bin/sh</h1>
-
-<p>/sbin/iptables-restore &lt; /etc/iptables.up.rules
-```</p>
+<pre><code>#!/bin/sh
+/sbin/iptables-restore &amp;lt; /etc/iptables.up.rules
+</code></pre>
 
 <p>Add execute permissions to the script, reboot, then login over SSH as our new user to test the firewall. Start commands with sudo when you login as the new user.</p>
 
-<p><code>
-sudo chmod +x /etc/network/if-pre-up.d/iptables
+<pre><code>sudo chmod +x /etc/network/if-pre-up.d/iptables
 sudo reboot
 ssh [username]@[server_ip]
 sudo /sbin/iptables -L
-</code></p>
+</code></pre>
 
 <h2>Set Timezone</h2>
 
 <p>Set the timezone to where most users reside. UTC is a good choice.</p>
 
-<p><code>
-sudo dpkg-reconfigure tzdata
-</code></p>
+<pre><code>sudo dpkg-reconfigure tzdata
+</code></pre>
 
 <h2>Update and Upgrade</h2>
 
 <p>As a new build, update our repository source list and run any necessary upgrades.</p>
 
-<p><code>
-sudo aptitude update
+<pre><code>sudo aptitude update
 sudo aptitude full-upgrade
-</code></p>
+</code></pre>
 
 <!-- END UPDATE -->
 
