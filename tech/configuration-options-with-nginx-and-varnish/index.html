@@ -55,14 +55,12 @@
 
 <p>There are four basic configuration files. For each configuration, only the changes to the base configuration are shown. First, use vi to open the Nginx config.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>Copy and paste the following:</p>
 
-<p><code>
-index app.php;
+<pre><code>index app.php;
 server {
     listen 80;
     server_name example.com;
@@ -76,52 +74,46 @@ server {
         fastcgi_pass unix:/var/run/php5-fpm.sock;
     }
 }
-</code></p>
+</code></pre>
 
 <p>Open the PHP-FPM config.</p>
 
-<p><code>
-sudo vi /etc/php5/fpm/pool.d/www.conf
-</code></p>
+<pre><code>sudo vi /etc/php5/fpm/pool.d/www.conf
+</code></pre>
 
 <p>Copy and paste the following:</p>
 
-<p><code>
-pm = dynamic
+<pre><code>pm = dynamic
 pm.max_children = 4
 pm.start_servers = 1
 pm.min_spare_servers = 1
 pm.max_spare_servers = 2
 pm.max_requests = 500
 listen = /var/run/php5-fpm.sock
-</code></p>
+</code></pre>
 
 <p>Open the Varnish daemon config.</p>
 
-<p><code>
-sudo vi /etc/default/varnish
-</code></p>
+<pre><code>sudo vi /etc/default/varnish
+</code></pre>
 
 <p>Copy and paste the following:</p>
 
-<p><code>
-DAEMON_OPTS=&quot;-a :6081
+<pre><code>DAEMON_OPTS=&quot;-a :6081
   -T localhost:6082
   -f /etc/varnish/default.vcl
   -S /etc/varnish/secret
   -s malloc,256M&quot;
-</code></p>
+</code></pre>
 
 <p>Open the default Varnish VCL file.</p>
 
-<p><code>
-sudo vi /etc/varnish/default.vcl
-</code></p>
+<pre><code>sudo vi /etc/varnish/default.vcl
+</code></pre>
 
 <p>Copy and paste the following:</p>
 
-<p><code>
-backend default {
+<pre><code>backend default {
     .host = &quot;127.0.0.1&quot;;
     .port = &quot;8080&quot;;
 }
@@ -131,7 +123,7 @@ sub vcl_recv {
 sub vcl_fetch {
     unset beresp.http.set-cookie;
 }
-</code></p>
+</code></pre>
 
 <p><h2 id="config1">Config 1. Standalone Nginx</p>
 
@@ -141,45 +133,39 @@ sub vcl_fetch {
 
 <p>Base config, but with Varnish in front.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>Change the port to 8080.</p>
 
-<p><code>
-index app.php;
+<pre><code>index app.php;
 server {
     listen 8080;
     ...
 }
-</code></p>
+</code></pre>
 
 <p>Then edit the Varnish config.</p>
 
-<p><code>
-sudo vi /etc/default/varnish
-</code></p>
+<pre><code>sudo vi /etc/default/varnish
+</code></pre>
 
 <p>Change the port to 80.</p>
 
-<p><code>
-DAEMON_OPTS=&quot;-a :80
+<pre><code>DAEMON_OPTS=&quot;-a :80
 ...
-</code></p>
+</code></pre>
 
 <p><h2 id="config3">Config 3. Nginx Sandwich</p>
 
 <p>Base config, but Nginx on 80 and 8080, with Varnish on 6081 in the middle.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>Add both 80 and 8080 blocks.</p>
 
-<p><code>
-index app.php;
+<pre><code>index app.php;
 server {
     listen 80;
     server_name example.com;
@@ -201,40 +187,36 @@ server {
         fastcgi_pass 127.0.0.1:9000;
     }
 }
-</code></p>
+</code></pre>
 
 <p><h2 id="config4">Config 4. Varnish Pass Static</p>
 
 <p>Base config, but Varnish on 80 and passing the static files to Nginx.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>Edit the VCL.</p>
 
-<p><code>
-sub vcl_recv {
+<pre><code>sub vcl_recv {
     unset req.http.cookie;
     if (req.url ~ “testhtml.htm”) {
         return (pass);
     }
 }
-</code></p>
+</code></pre>
 
 <p><h2 id="config5">Config 5. Nginx w/FastCGI Cache</p>
 
 <p>Base config, but FastCGI cache added to Nginx config.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/default
+<pre><code>sudo vi /etc/nginx/sites-available/default
 sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+</code></pre>
 
 <p>Make changes to the root HTTP clock.</p>
 
-<p><code>
-http {
+<pre><code>http {
     ...
     fastcgi_cache_path /path/to/cache  levels=1:2 keys_zone=[example]:10m inactive=5m;
     fastcgi_cache_key &quot;$scheme$request_method$host$request_uri&quot;;
@@ -250,33 +232,29 @@ http {
         }
     }
 }
-</code></p>
+</code></pre>
 
 <p><h2 id="config6">Config 6. Part 1: Nginx using FastCGI w/ TCP/IP</p>
 
 <p>Base config, but change communication to Unix sockets.</p>
 
-<p><code>
-sudo vi /etc/php5/fpm/pool.d/www.conf
-</code></p>
+<pre><code>sudo vi /etc/php5/fpm/pool.d/www.conf
+</code></pre>
 
 <p>Edit the listen variable.</p>
 
-<p><code>
-listen = 127.0.0.1:9000
-</code></p>
+<pre><code>listen = 127.0.0.1:9000
+</code></pre>
 
 <p>Edit the Nginx config too.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>Change the required FastCGI parameter.</p>
 
-<p><code>
-fastcgi_pass 127.0.0.1:9000;
-</code></p>
+<pre><code>fastcgi_pass 127.0.0.1:9000;
+</code></pre>
 
 <h2>Config 6. Part 2: Nginx using FastCGI w/ Unix Sockets</h2>
 

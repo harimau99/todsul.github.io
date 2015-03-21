@@ -52,190 +52,164 @@
 
 <p>Open the httpd config file:</p>
 
-<p><code>
-sudo vi /etc/apache2/httpd.conf
-</code></p>
+<pre><code>sudo vi /etc/apache2/httpd.conf
+</code></pre>
 
 <p>Uncomment these lines:</p>
 
-<p><code>
-LoadModule vhost_alias_module libexec/apache2/mod_vhost_alias.so
+<pre><code>LoadModule vhost_alias_module libexec/apache2/mod_vhost_alias.so
 ...
 LoadModule userdir_module libexec/apache2/mod_userdir.so
 ...
 Include /private/etc/apache2/extra/httpd-userdir.conf
 ...
 Include /private/etc/apache2/extra/httpd-vhosts.conf
-</code></p>
+</code></pre>
 
 <p>Open the userdir file:</p>
 
-<p><code>
-sudo vi /private/etc/apache2/extra/httpd-userdir.conf
-</code></p>
+<pre><code>sudo vi /private/etc/apache2/extra/httpd-userdir.conf
+</code></pre>
 
 <p>Uncomment these lines:</p>
 
-<p><code>
-Include /private/etc/apache2/users/*.conf
-</code></p>
+<pre><code>Include /private/etc/apache2/users/*.conf
+</code></pre>
 
 <p>Create a file for user permissions:</p>
 
-<p><code>
-sudo vi /etc/apache2/users/[username].conf
-</code></p>
+<pre><code>sudo vi /etc/apache2/users/[username].conf
+</code></pre>
 
 <p>Copy and paste the following lines into the file:</p>
 
-<p><code>
-&amp;lt;Directory &quot;/path/to/web/folder&quot;&amp;gt;
+<pre><code>&amp;lt;Directory &quot;/path/to/web/folder&quot;&amp;gt;
 Options FollowSymLinks Indexes MultiViews
 Require all granted
 AllowOverride All
 &amp;lt;/Directory&amp;gt;
-</code></p>
+</code></pre>
 
 <p>Open the hosts file:</p>
 
-<p><code>
-sudo vi /etc/hosts
-</code></p>
+<pre><code>sudo vi /etc/hosts
+</code></pre>
 
 <p>Add a record for the website:</p>
 
-<p><code>
-127.0.0.1 [example].localhost
-</code></p>
+<pre><code>127.0.0.1 [example].localhost
+</code></pre>
 
 <p>Open the vhosts file:</p>
 
-<p><code>
-sudo vi /etc/apache2/extra/httpd-vhosts.conf
-</code></p>
+<pre><code>sudo vi /etc/apache2/extra/httpd-vhosts.conf
+</code></pre>
 
 <p>Copy, paste and configure the following lines:</p>
 
-<p><code>
-&amp;lt;VirtualHost *:80&amp;gt;
+<pre><code>&amp;lt;VirtualHost *:80&amp;gt;
 DocumentRoot &quot;/path/to/web/folder&quot;
 ServerName [example].localhost
 &amp;lt;/VirtualHost&amp;gt;
-</code></p>
+</code></pre>
 
 <p>Restart Apache:</p>
 
-<p><code>
-sudo apachectl restart
-</code></p>
+<pre><code>sudo apachectl restart
+</code></pre>
 
 <p>Test the website:</p>
 
-<p><code>
-http://example.localhost
-</code></p>
+<pre><code>http://example.localhost
+</code></pre>
 
 <h2 id="step2">Step 2. Configure PHP</h2>
 
 <p>Open the httpd config file:</p>
 
-<p><code>
-sudo vi /etc/apache2/httpd.conf
-</code></p>
+<pre><code>sudo vi /etc/apache2/httpd.conf
+</code></pre>
 
 <p>Enable PHP by uncommenting this line:</p>
 
-<p><code>
-LoadModule php5_module libexec/apache2/libphp5.so
-</code></p>
+<pre><code>LoadModule php5_module libexec/apache2/libphp5.so
+</code></pre>
 
 <p>Copy and open the PHP config file:</p>
 
-<p><code>
-sudo cp /etc/php.ini.default /etc/php.ini
+<pre><code>sudo cp /etc/php.ini.default /etc/php.ini
 sudo vi /etc/php.ini
-</code></p>
+</code></pre>
 
 <p>Set the timezone to UTC:</p>
 
-<p><code>
-date.timezone = UTC
-</code></p>
+<pre><code>date.timezone = UTC
+</code></pre>
 
 <p>Set owner permissions to cache and logs:</p>
 
-<p><code>
-cd /path/to/web/folder
+<pre><code>cd /path/to/web/folder
 sudo rm -rf app/cache/*
 sudo rm -rf app/logs/*
 sudo chmod +a &quot;www allow delete,write,append,file_inherit,directory_inherit&quot; app/cache app/logs
 sudo chmod +a &quot;`whoami` allow delete,write,append,file_inherit,directory_inherit&quot; app/cache app/logs
-</code></p>
+</code></pre>
 
 <p>Restart Apache:</p>
 
-<p><code>
-sudo apachectl restart
-</code></p>
+<pre><code>sudo apachectl restart
+</code></pre>
 
 <p>Test website:</p>
 
-<p><code>
-http://example.localhost/index.php
-</code></p>
+<pre><code>http://example.localhost/index.php
+</code></pre>
 
 <h2 id="step3">Step 3. Configure SSL</h2>
 
 <p>Open the httpd config file:</p>
 
-<p><code>
-sudo vi /etc/apache2/httpd.conf
-</code></p>
+<pre><code>sudo vi /etc/apache2/httpd.conf
+</code></pre>
 
 <p>Enable HTTPS/SSL by uncommenting these lines:</p>
 
-<p><code>
-LoadModule ssl_module libexec/apache2/mod_ssl.so
+<pre><code>LoadModule ssl_module libexec/apache2/mod_ssl.so
 ...
 LoadModule socache_shmcb_module libexec/apache2/mod_socache_shmcb.so
 ...
 Include /private/etc/apache2/extra/httpd-ssl.conf
-</code></p>
+</code></pre>
 
 <p>Create a certificate:</p>
 
-<p><code>
-cd /etc/apache2
+<pre><code>cd /etc/apache2
 sudo ssh-keygen -f server.nopass.key
 sudo openssl req -new -key server.nopass.key -out request.csr
 sudo openssl x509 -req -days 365 -in request.csr -signkey server.nopass.key -out server.crt
 sudo openssl rsa -in server.nopass.key -out server.key
-</code></p>
+</code></pre>
 
 <p>Open the SSL httpd config file:</p>
 
-<p><code>
-sudo vi /etc/apache2/extra/httpd-ssl.conf
-</code></p>
+<pre><code>sudo vi /etc/apache2/extra/httpd-ssl.conf
+</code></pre>
 
 <p>Remove existing blocks, then add and configure these lines:</p>
 
-<p><code>
-DocumentRoot &quot;/path/to/web/folder&quot;;
+<pre><code>DocumentRoot &quot;/path/to/web/folder&quot;;
 ServerName [example].localhost
-</code></p>
+</code></pre>
 
 <p>Restart Apache:</p>
 
-<p><code>
-sudo apachectl restart
-</code></p>
+<pre><code>sudo apachectl restart
+</code></pre>
 
 <p>Test the website:</p>
 
-<p><code>
-https://example.localhost
-</code></p>
+<pre><code>https://example.localhost
+</code></pre>
 
 <h2 id="step4">Step 4. Install MySQL onto a Ramdisk</h2>
 
@@ -246,135 +220,117 @@ https://example.localhost
 
 <p>Copy and open the MySQL config file:</p>
 
-<p><code>
-sudo cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf
+<pre><code>sudo cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf
 sudo vi /etc/my.cnf
-</code></p>
+</code></pre>
 
 <p>Enter the following config into my.cnf:</p>
 
-<p><code>
-[mysqld]
+<pre><code>[mysqld]
 ...
 default_time_zone = '+00:00'
 datadir = /Volumes/ramdisk/data
 innodb_flush_log_at_trx_commit = 2
 innodb_data_home_dir = /Volumes/ramdisk/data
-</code></p>
+</code></pre>
 
 <p>Create a bash profile file to set the path and aliases:</p>
 
-<p><code>
-sudo vi ~/.bash_profile
-</code></p>
+<pre><code>sudo vi ~/.bash_profile
+</code></pre>
 
 <p>Add these lines to the file:</p>
 
-<p><code>
-export PATH=&quot;/usr/local/mysql/bin:$PATH&quot;
+<pre><code>export PATH=&quot;/usr/local/mysql/bin:$PATH&quot;
 alias ramdisk=&quot;/path/to/ramdisk.sh&quot;
 alias mysetup=&quot;/path/to/mysetup.sh&quot;
-</code></p>
+</code></pre>
 
 <p>Reload your profile:</p>
 
-<p><code>
-su - [username]
-</code></p>
+<pre><code>su - [username]
+</code></pre>
 
 <p>Create and save a ramdisk.sh script file with the following lines:</p>
 
-<p><code>
-diskutil erasevolume HFS+ &quot;ramdisk&quot; `hdiutil attach -nomount ram://2048000`
+<pre><code>diskutil erasevolume HFS+ &quot;ramdisk&quot; `hdiutil attach -nomount ram://2048000`
 sudo cp -R /usr/local/mysql/data /Volumes/ramdisk/data
-</code></p>
+</code></pre>
 
 <p>Create and save a mysetup.sh script file with the following lines:</p>
 
-<p>```
-/usr/local/mysql/support-files/mysql.server start</p>
+<pre><code>/usr/local/mysql/support-files/mysql.server start
 
-<p>mysql -u root -e &quot;create database if not exists [database];&quot;
+mysql -u root -e &quot;create database if not exists [database];&quot;
 mysql -u root -e &quot;create user '[username]' identified by '[password]';&quot;
-mysql -u root -e &quot;grant all privileges on <em>.</em> to [database]@localhost;&quot;
+mysql -u root -e &quot;grant all privileges on *.* to [database]@localhost;&quot;
 mysql -u root -e &quot;use mysql; update user set password=password('[password]') where user ='[username]';&quot;
-mysql -u root -e &quot;flush privileges;&quot;</p>
+mysql -u root -e &quot;flush privileges;&quot;
 
-<p>/usr/local/mysql/support-files/mysql.server restart
-```</p>
+/usr/local/mysql/support-files/mysql.server restart
+</code></pre>
 
 <p>Open the PHP config file:</p>
 
-<p><code>
-sudo vi /etc/php.ini
-</code></p>
+<pre><code>sudo vi /etc/php.ini
+</code></pre>
 
 <p>Find and update this line:</p>
 
-<p><code>
-pdo_mysql.default_socket=/tmp/mysql_ram.sock
-</code></p>
+<pre><code>pdo_mysql.default_socket=/tmp/mysql_ram.sock
+</code></pre>
 
 <p>Run the scripts to create the ramdisk and setup the database:</p>
 
-<p><code>
-ramdisk
+<pre><code>ramdisk
 mysetup
-</code></p>
+</code></pre>
 
 <h2 id="step5">Step 5. Extras</h2>
 
 <p>Install and configure git:</p>
 
-<p><code>
-git
-</code></p>
+<pre><code>git
+</code></pre>
 
 <p>Follow propmts to install command line tools, then configure git:</p>
 
-<p><code>
-git config --global user.name 'username'
+<pre><code>git config --global user.name 'username'
 git config --global user.email 'email'
-</code></p>
+</code></pre>
 
 <p>Save credentials in the keychain:</p>
 
-<p><code>
-git config --global credential.helper osxkeychain
-</code></p>
+<pre><code>git config --global credential.helper osxkeychain
+</code></pre>
 
 <p>Configure user to not require password:</p>
 
-<p><code>
-sudo chown -R ~
+<pre><code>sudo chown -R ~
 sudo chown -R /path/to/websites
 sudo visudo
-</code></p>
+</code></pre>
 
 <p>Then add this ine under the admin user:</p>
 
-<p><code>
-[username] ALL=(ALL) NOPASSWD: ALL
-</code></p>
+<pre><code>[username] ALL=(ALL) NOPASSWD: ALL
+</code></pre>
 
 <p>Install node.js and tools:</p>
 
-<p><code>
-http://nodejs.org
+<pre><code>http://nodejs.org
 sudo npm install -g gulp
-</code></p>
+</code></pre>
 
 <p>Install Java for various tools:</p>
 
-<p><code>
-http://support.apple.com/kb/dl1572
-</code></p>
+<pre><code>http://support.apple.com/kb/dl1572
+</code></pre>
 
 <p>Stop writing of Mac DS_Store files:</p>
 
-<p><code>
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-</code></p>
+<pre><code>defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+</code></pre>
 
 <!-- END UPDATE -->
 

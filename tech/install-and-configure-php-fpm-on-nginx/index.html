@@ -44,87 +44,76 @@
 
 <p>Use the latest package with FPM compiled into PHP5.</p>
 
-<p><code>
-sudo add-apt-repository ppa:ondrej/php5
-</code></p>
+<pre><code>sudo add-apt-repository ppa:ondrej/php5
+</code></pre>
 
 <h2>Install the Package</h2>
 
 <p>The -v switch confirms PHP version.</p>
 
-<p><code>
-sudo aptitude update
+<pre><code>sudo aptitude update
 sudo aptitude install php5-fpm
 php5-fpm -v
-</code></p>
+</code></pre>
 
 <p>Install other required PHP packages.</p>
 
-<p><code>
-sudo aptitude install php5-common
+<pre><code>sudo aptitude install php5-common
 sudo aptitude install php5-gd
 sudo aptitude install php5-cli
 sudo aptitude install php5-curl
-</code></p>
+</code></pre>
 
 <h2>Configure FPM</h2>
 
 <p>The Nginx PHP5 package puts the FPM config in a custom location.</p>
 
-<p><code>
-sudo vi /etc/php5/fpm/pool.d/www.conf
-</code></p>
+<pre><code>sudo vi /etc/php5/fpm/pool.d/www.conf
+</code></pre>
 
 <p>Each process takes about 35Mb. Keep this in mind when configuring FPM. These settings are for a 512MB Linode. Adjust as necessary.</p>
 
-<p><code>
-pm = dynamic
+<pre><code>pm = dynamic
 pm.max_children = 4
 pm.start_servers = 1
 pm.min_spare_servers = 1
 pm.max_spare_servers = 2
 pm.max_requests = 500
 listen = 127.0.0.1:9000
-</code></p>
+</code></pre>
 
 <p>Open the FPM config file.</p>
 
-<p><code>
-sudo vi /etc/php5/fpm/php.ini
-</code></p>
+<pre><code>sudo vi /etc/php5/fpm/php.ini
+</code></pre>
 
 <p>Set charset to UTF8.</p>
 
-<p><code>
-default_charset = &quot;utf-8&quot;
-</code></p>
+<pre><code>default_charset = &quot;utf-8&quot;
+</code></pre>
 
 <h2>Configure FastCGI</h2>
 
 <p>The package provides default FastCGI parameters.</p>
 
-<p><code>
-sudo vi /etc/nginx/fastcgi_params
-</code></p>
+<pre><code>sudo vi /etc/nginx/fastcgi_params
+</code></pre>
 
 <p>Add the script filename to this file.</p>
 
-<p><code>
-fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-</code></p>
+<pre><code>fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+</code></pre>
 
 <h2>Configure Nginx</h2>
 
 <p>Tell Nginx to pass PHP scripts to FPM.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>The first try<em>files command supports pretty URLs by deferring to a front controller. The second try</em>files command helps thwart arbitrary code execution.</p>
 
-<p><code>
-index index.php;
+<pre><code>index index.php;
 server {
     server_name www.example.com;
     rewrite ^ $scheme://example.com$request_uri? permanent;
@@ -143,35 +132,31 @@ server {
         fastcgi_pass 127.0.0.1:9000;
     }
 }
-</code></p>
+</code></pre>
 
 <h2>TCP vs Unix Sockets</h2>
 
 <p>Unix sockets are typically a little faster, so change if desired.</p>
 
-<p><code>
-sudo vi /etc/php5/fpm/pool.d/www.conf
+<pre><code>sudo vi /etc/php5/fpm/pool.d/www.conf
 sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+</code></pre>
 
 <p>Use this line in the FPM config:</p>
 
-<p><code>
-listen = /var/run/php5-fpm.sock
-</code></p>
+<pre><code>listen = /var/run/php5-fpm.sock
+</code></pre>
 
 <p>Use this line in the Nginx config:</p>
 
-<p><code>
-fastcgi_pass unix:/var/run/php5-fpm.sock;
-</code></p>
+<pre><code>fastcgi_pass unix:/var/run/php5-fpm.sock;
+</code></pre>
 
 <h2>Restart Services</h2>
 
-<p><code>
-sudo service nginx restart
+<pre><code>sudo service nginx restart
 sudo service php5-fpm start
-</code></p>
+</code></pre>
 
 <!-- END UPDATE -->
 

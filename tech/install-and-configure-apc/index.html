@@ -44,29 +44,26 @@
 
 <p>Use a package to install the latest version.</p>
 
-<p><code>
-sudo add-apt-repository ppa:brianmercer/apc
+<pre><code>sudo add-apt-repository ppa:brianmercer/apc
 sudo aptitude update
 sudo aptitude install php-apc
-</code></p>
+</code></pre>
 
 <h2>Configure APC</h2>
 
-<p><code>
-sudo vi /etc/php5/conf.d/apc.ini
-</code></p>
+<pre><code>sudo vi /etc/php5/conf.d/apc.ini
+</code></pre>
 
 <p>The shm<em>size setting suggests APC uses shared kernel memory, but most APC installs are complied with MMAP support. This is why we can increase shm</em>size above our kernel shm<em>size. With MMAP, APC only uses one shm</em>segment.</p>
 
-<p><code>
-extension=apc.so
+<pre><code>extension=apc.so
 apc.enabled=1
 apc.shm_segments=1
 apc.shm_size=64M
 apc.ttl=7200
 apc.user_ttl=7200
 apc.filters=apc\.php$
-</code></p>
+</code></pre>
 
 <p>Increase shm_size to provide ample caching space and set TTLs so garbage collection works more efficiently. Also add a filter to bypass the APC stats page.</p>
 
@@ -74,18 +71,16 @@ apc.filters=apc\.php$
 
 <p>APC comes with a nifty stats page. Copy it to the web folder and unzip.</p>
 
-<p><code>
-sudo cp /usr/share/doc/php-apc/apc.php.gz /srv/www/example.com/web
+<pre><code>sudo cp /usr/share/doc/php-apc/apc.php.gz /srv/www/example.com/web
 sudo gzip -d /srv/www/example.com/web/apc.php.gz
 sudo vi /srv/www/example.com/web/apc.php
-</code></p>
+</code></pre>
 
 <p>Change the password to enable web-based purging and advanced stats.</p>
 
-<p><code>
-defaults('ADMIN_USERNAME','apc');
+<pre><code>defaults('ADMIN_USERNAME','apc');
 defaults('ADMIN_PASSWORD','newpassword');
-</code></p>
+</code></pre>
 
 <p>Reboot the server for APC to start and then test the page at http://example.com/apc.php.</p>
 

@@ -48,23 +48,21 @@
 
 <p>Rather than FTP'ing files individually, archive all prod files, upload the archive and unzip insitu. Once unzipped, set write permissions for the cache and logs directories.</p>
 
-<p><code>
-cd /srv/www/example.com
+<pre><code>cd /srv/www/example.com
 sudo unzip Archive.zip
 sudo chown [user] /srv/www/example.com
 sudo chmod -R 777 /srv/www/example.com/app/cache
 sudo chmod -R 777 /srv/www/example.com/app/logs
-</code></p>
+</code></pre>
 
 <h2>Setup Resources</h2>
 
 <p>The Assetic asset dump requires Java. Without Java installed, run the dump locally and upload the files. The asset:install works fine though.</p>
 
-<p><code>
-cd /srv/www/example.com
+<pre><code>cd /srv/www/example.com
 app/console assetic:dump
 app/console assets:install --symlink web
-</code></p>
+</code></pre>
 
 <h2>Configure Nginx for Symfony</h2>
 
@@ -81,14 +79,12 @@ app/console assets:install --symlink web
 
 <p>Open the Nginx config.</p>
 
-<p><code>
-sudo vi /etc/nginx/sites-available/example.com
-</code></p>
+<pre><code>sudo vi /etc/nginx/sites-available/example.com
+</code></pre>
 
 <p>Copy and paste the following:</p>
 
-<p><code>
-index app.php;
+<pre><code>index app.php;
 access_log off;
 server {
     listen 8080;
@@ -115,20 +111,18 @@ server {
         fastcgi_param  SERVER_PORT 80;
     }
 }
-</code></p>
+</code></pre>
 
 <h2>Configure Varnish for Symfony</h2>
 
 <p>Remove any cookie manipulation and add ESI handling.</p>
 
-<p><code>
-sudo vi /etc/varnish/default.vcl
-</code></p>
+<pre><code>sudo vi /etc/varnish/default.vcl
+</code></pre>
 
 <p>Copy and paste the following:</p>
 
-<p><code>
-sub vcl_recv {
+<pre><code>sub vcl_recv {
     set req.http.Surrogate-Capability = &quot;abc=ESI/1.0&quot;;
 }
 sub vcl_fetch {
@@ -137,64 +131,57 @@ sub vcl_fetch {
         set beresp.do_esi = true;
     }
 }
-</code></p>
+</code></pre>
 
 <h2>Configure Symfony for ESI</h2>
 
 <p>See the Symfony2 ESI cookbook for more info. Start by turning on ESI in config.yml.</p>
 
-<p><code>
-framework:
+<pre><code>framework:
     esi:             true
-</code></p>
+</code></pre>
 
 <p>Turn on Assetic asset versioning for cache bursting. This is essential for the aggressive (expires max;) asset caching in the Nginx config. For assets not handled by Assetic (e.g. images inside CSS files) add versioning manually (e.g. logo.png?v=1).</p>
 
-<p><code>
-framework:
+<pre><code>framework:
     templating:      { engines: ['twig'], assets_version: v1 }
-</code></p>
+</code></pre>
 
 <p>Set sections of the website as standalone (ESI enabled). This allows various TTLs on a single page. Varnish puts each section together to construct the page before caching.</p>
 
-<p><code>
-{% render 'Vendor:Bundle:controller' with {}, {'standalone': true} %} // or...
+<pre><code>{% render 'Vendor:Bundle:controller' with {}, {'standalone': true} %} // or...
 $this-&amp;gt;render('Vendor:Example:temp.html.twig', array('standalone' =&amp;gt; true));
-</code></p>
+</code></pre>
 
 <p>Set shared max age for responses and sections. If you set the max age (non-shared), ESI will not work because the whole page is cached.</p>
 
-<p><code>
-$response-&amp;gt;setSharedMaxAge(60);
-</code></p>
+<pre><code>$response-&amp;gt;setSharedMaxAge(60);
+</code></pre>
 
 <h2>Setup Authentication</h2>
 
 <p>Since Symfony is running on Nginx on port 8080, make these adjustments to support Symfony authentication. Firstly, in AppKernal.php, add this line before $kernel-&gt;handle():</p>
 
-<p><code>
-Request::trustProxyData();
-</code></p>
+<pre><code>Request::trustProxyData();
+</code></pre>
 
 <p>Also, add these changes to the Varnish VCL file:</p>
 
-<p><code>
-set req.http.X-Forwarded-Port = &quot;80&quot;;
+<pre><code>set req.http.X-Forwarded-Port = &quot;80&quot;;
 if (req.http.Authorization || req.http.Cookie) {
     return (pass);
 }
-</code></p>
+</code></pre>
 
 <h2>Test Setup</h2>
 
 <p>Clear all caches, restart services and test.</p>
 
-<p><code>
-sudo app/console cache:clear --env=prod --no-warmup
+<pre><code>sudo app/console cache:clear --env=prod --no-warmup
 sudo service nginx restart
 sudo service php5-fpm restart
 sudo service varnish restart
-</code></p>
+</code></pre>
 
 <!-- END UPDATE -->
 

@@ -44,86 +44,77 @@
 
 <h2>Install Apache Bench</h2>
 
-<p><code>
-sudo aptitude install apache2-utils
-</code></p>
+<pre><code>sudo aptitude install apache2-utils
+</code></pre>
 
 <h2>Run Apache Bench</h2>
 
 <p>The following line uses keepalive for 50,000 connections, at a concurrency of 100 and a timeout of 20 seconds. Be sure to end root domains with a slash.</p>
 
-<p><code>
-ab -k -n 50000 -c 100 -t 20 http://example.com/
-</code></p>
+<pre><code>ab -k -n 50000 -c 100 -t 20 http://example.com/
+</code></pre>
 
 <h2>Create a Static HTML Test File</h2>
 
-<p><code>
-sudo vi /srv/www/example.com/web/testhtml.htm
-</code></p>
+<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm
+</code></pre>
 
 <p>Add the following content to the test file:</p>
 
-<p><code>
-&amp;lt;!DOCTYPE HTML&amp;gt;
+<pre><code>&amp;lt;!DOCTYPE HTML&amp;gt;
 &amp;lt;html&amp;gt;
 &amp;lt;head&amp;gt;&amp;lt;title&amp;gt;#1 HTML Test&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;
 &amp;lt;body&amp;gt;
 This is a web server test page.
 &amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
-</code></p>
+</code></pre>
 
 <h2>Create a Dynamic PHP File</h2>
 
-<p><code>
-sudo vi /srv/www/example.com/web/testhtml.htm
-</code></p>
+<pre><code>sudo vi /srv/www/example.com/web/testhtml.htm
+</code></pre>
 
 <p>Add the following content to the test file:</p>
 
-<p><code>
-&amp;lt;!DOCTYPE HTML&amp;gt;
+<pre><code>&amp;lt;!DOCTYPE HTML&amp;gt;
 &amp;lt;?php echo '&amp;lt;html&amp;gt;'; ?&amp;gt;
 &amp;lt;?php echo '&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;#2 PHP Test&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;'; ?&amp;gt;
 &amp;lt;?php echo '&amp;lt;body&amp;gt;'; ?&amp;gt;
 &amp;lt;?php echo 'This is a web server test page.'; ?&amp;gt;
 &amp;lt;?php echo '&amp;lt;/body&amp;gt;'; ?&amp;gt;
 &amp;lt;?php echo '&amp;lt;/html&amp;gt;'; ?&amp;gt;
-</code></p>
+</code></pre>
 
 <h2>Create a Dynamic MySQL File</h2>
 
-<p><code>
-sudo vi /srv/www/example.com/web/testmysql.php
-</code></p>
+<pre><code>sudo vi /srv/www/example.com/web/testmysql.php
+</code></pre>
 
 <p>Add the following content to the test file:</p>
 
-<p>```
-&lt;!DOCTYPE HTML&gt;
-&lt;?php
-   $link = mysql<em>connect(&quot;localhost&quot;, &quot;username&quot;, &quot;password&quot;);
-   mysql</em>select_db(&quot;mytest&quot;);</p>
+<pre><code>&amp;lt;!DOCTYPE HTML&amp;gt;
+&amp;lt;?php
+   $link = mysql_connect(&quot;localhost&quot;, &quot;username&quot;, &quot;password&quot;);
+   mysql_select_db(&quot;mytest&quot;);
 
-<p>$query = &quot;SELECT * FROM mytest&quot;;
-   $result = mysql_query($query);</p>
+   $query = &quot;SELECT * FROM mytest&quot;;
+   $result = mysql_query($query);
 
-<p>while ($line = mysql<em>fetch</em>array($result))
+   while ($line = mysql_fetch_array($result))
    {
        print &quot;$line[0]\n&quot;;
    }
    mysql_close($link);
-?&gt;
-```</p>
+?&amp;gt;
+</code></pre>
 
 <p>Configure the database for the test file:</p>
 
-<p><code>
-USE mytest
+<pre><code>USE mytest
 CREATE TABLE mytest (content text) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 INSERT INTO mytest (content) VALUES('&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;#1 HTML Test&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;This is a web server test page.&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;');
-</code></p>
+</code></pre>
 
 <!-- END UPDATE -->
 

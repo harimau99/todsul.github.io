@@ -42,77 +42,69 @@
 
 <h2>Install MySQL and PHP5 support</h2>
 
-<p><code>
-sudo aptitude update
+<pre><code>sudo aptitude update
 sudo aptitude install mysql-server
 sudo aptitude install php5-mysql
-</code></p>
+</code></pre>
 
 <h2>Secure MySQL and Login</h2>
 
 <p>Choose yes for all questions, except to change the root password.</p>
 
-<p><code>
-sudo mysql_secure_installation
+<pre><code>sudo mysql_secure_installation
 mysql -u root -p
-</code></p>
+</code></pre>
 
 <p>If necessary, add the mysql path (/usr/local/mysql/bin) to the profile and refresh.</p>
 
-<p><code>
-cd
+<pre><code>cd
 vi  ~/.profile
 . ./.profile
 echo $PATH
-</code></p>
+</code></pre>
 
 <h2>Create a database</h2>
 
 <p>Change the root password, create database and users, give privileges.</p>
 
-<p><code>
-mysqladmin -u root password [newpassword]
+<pre><code>mysqladmin -u root password [newpassword]
 mysql -u root -p [password]
 create database mytest;
 create user 'username' identified by 'password';
 grant all privileges on *.* to username@localhost;
 flush privileges;
 exit
-</code></p>
+</code></pre>
 
 <h2>Export a Database</h2>
 
 <p>Switch to the superuser to avoid any permissions issues.</p>
 
-<p><code>
-sudo su -
+<pre><code>sudo su -
 mysqldump -u [user] -p [database] &amp;gt; [filename].sql
-</code></p>
+</code></pre>
 
 <h2>Import a Database</h2>
 
 <p>For smaller files, import from the unix shell.</p>
 
-<p><code>
-mysql -u [user] -p [database] &amp;lt; [filename].sql
-</code></p>
+<pre><code>mysql -u [user] -p [database] &amp;lt; [filename].sql
+</code></pre>
 
 <p>For larger files, use the source command inside mysql.</p>
 
-<p><code>
-mysql -u [user] -p
+<pre><code>mysql -u [user] -p
 use [database]
 source &amp;lt; [file].sql
-</code></p>
+</code></pre>
 
 <h2>Set Charset</h2>
 
 <p>We want end-to-end UTF8.</p>
 
-<p><code>
-ALTER DATABASE DEFAULT CHARACTER SET utf8;
+<pre><code>ALTER DATABASE DEFAULT CHARACTER SET utf8;
 ALTER TABLE [exampletable] DEFAULT CHARACTER SET utf8;
-</code></p>
+</code></pre>
 
 <!-- END UPDATE -->
 
