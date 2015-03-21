@@ -8,7 +8,7 @@ This is to setup virtual hosting, PHP, MySQL on ramdisk, and SSL on Mac OS X 10.
 <li><a href="#step5">[View]</a> Step 5. Extras</li>
 </ol>
 
-<h2 id="step1">Step 1. Configure Virtual Hosting
+<h2 id="step1">Step 1. Configure Virtual Hosting</h2>
 
 Open the httpd config file:
 
@@ -95,7 +95,7 @@ Test the website:
 http://example.localhost
 ```
 
-<h2 id="step2">Step 2. Configure PHP
+<h2 id="step2">Step 2. Configure PHP</h2>
 
 Open the httpd config file:
 
@@ -144,7 +144,7 @@ Test website:
 http://example.localhost/index.php
 ```
 
-<h2 id="step3">Step 3. Configure SSL
+<h2 id="step3">Step 3. Configure SSL</h2>
 
 Open the httpd config file:
 
@@ -197,7 +197,7 @@ Test the website:
 https://example.localhost
 ```
 
-<h2 id="step4">Step 4. Install MySQL onto a Ramdisk
+<h2 id="step4">Step 4. Install MySQL onto a Ramdisk</h2>
 
 <ul>
 <li>Download and install MySQL from the <a href="http://www.mysql.com/downloads/mysql/">download page</a>.</li>
@@ -282,7 +282,7 @@ ramdisk
 mysetup
 ```
 
-<h2 id="step5">Step 5. Extras
+<h2 id="step5">Step 5. Extras</h2>
 
 Install and configure git:
 
