@@ -61,13 +61,13 @@
 
 <p>Add the following content to the test file:</p>
 
-<pre><code>&amp;lt;!DOCTYPE HTML&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;#1 HTML Test&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
 This is a web server test page.
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
 <h2>Create a Dynamic PHP File</h2>
@@ -77,13 +77,13 @@ This is a web server test page.
 
 <p>Add the following content to the test file:</p>
 
-<pre><code>&amp;lt;!DOCTYPE HTML&amp;gt;
-&amp;lt;?php echo '&amp;lt;html&amp;gt;'; ?&amp;gt;
-&amp;lt;?php echo '&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;#2 PHP Test&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;'; ?&amp;gt;
-&amp;lt;?php echo '&amp;lt;body&amp;gt;'; ?&amp;gt;
-&amp;lt;?php echo 'This is a web server test page.'; ?&amp;gt;
-&amp;lt;?php echo '&amp;lt;/body&amp;gt;'; ?&amp;gt;
-&amp;lt;?php echo '&amp;lt;/html&amp;gt;'; ?&amp;gt;
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;?php echo '&lt;html&gt;'; ?&gt;
+&lt;?php echo '&lt;head&gt;&lt;title&gt;#2 PHP Test&lt;/title&gt;&lt;/head&gt;'; ?&gt;
+&lt;?php echo '&lt;body&gt;'; ?&gt;
+&lt;?php echo 'This is a web server test page.'; ?&gt;
+&lt;?php echo '&lt;/body&gt;'; ?&gt;
+&lt;?php echo '&lt;/html&gt;'; ?&gt;
 </code></pre>
 
 <h2>Create a Dynamic MySQL File</h2>
@@ -93,8 +93,8 @@ This is a web server test page.
 
 <p>Add the following content to the test file:</p>
 
-<pre><code>&amp;lt;!DOCTYPE HTML&amp;gt;
-&amp;lt;?php
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;?php
    $link = mysql_connect(&quot;localhost&quot;, &quot;username&quot;, &quot;password&quot;);
    mysql_select_db(&quot;mytest&quot;);
 
@@ -106,14 +106,14 @@ This is a web server test page.
        print &quot;$line[0]\n&quot;;
    }
    mysql_close($link);
-?&amp;gt;
+?&gt;
 </code></pre>
 
 <p>Configure the database for the test file:</p>
 
 <pre><code>USE mytest
 CREATE TABLE mytest (content text) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-INSERT INTO mytest (content) VALUES('&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;#1 HTML Test&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;This is a web server test page.&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;');
+INSERT INTO mytest (content) VALUES('&lt;html&gt;&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;This is a web server test page.&lt;/body&gt;&lt;/html&gt;');
 </code></pre>
 
 <!-- END UPDATE -->

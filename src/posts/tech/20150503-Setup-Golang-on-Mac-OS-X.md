@@ -1,3 +1,8 @@
+## Download and install Go tools
+
+    There is an OS X package to make life easy:
+    https://golang.org/dl/
+
 ## Setup Go workspace
 
     mkdir $HOME/go

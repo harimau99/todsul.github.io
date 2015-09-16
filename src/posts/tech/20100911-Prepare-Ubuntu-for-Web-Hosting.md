@@ -16,7 +16,7 @@ Remote into the node using the root password you chose when rebuilding the node.
 
 Use vi to edit files. Search Google to find basic commands.
 
-    echo "[hostname]" &gt; /etc/hostname
+    echo "[hostname]" > /etc/hostname
     hostname -F /etc/hostname
     vi /etc/hosts
 
@@ -74,14 +74,14 @@ These rules allow loopback, established, outbound, HTTP, HTTPS, SSH and ping tra
 
 Import the settings file and create the script to re-import the rules on restart.
 
-    sudo /sbin/iptables-restore &lt; /etc/iptables.up.rules
+    sudo /sbin/iptables-restore < /etc/iptables.up.rules
     sudo /sbin/iptables -L
     sudo vi /etc/network/if-pre-up.d/iptables
 
 Add these lines to the script file.
 
     #!/bin/sh
-    /sbin/iptables-restore &lt; /etc/iptables.up.rules
+    /sbin/iptables-restore < /etc/iptables.up.rules
 
 Add execute permissions to the script, reboot, then login over SSH as our new user to test the firewall. Start commands with sudo when you login as the new user.
 

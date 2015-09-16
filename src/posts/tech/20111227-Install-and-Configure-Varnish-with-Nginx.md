@@ -6,7 +6,7 @@ Change the version number to suit. The 3.0 path installs 3.0.1 at this time.
 
     sudo su -
     curl http://repo.varnish-cache.org/debian/GPG-key.txt | apt-key add -
-    echo "deb http://repo.varnish-cache.org/ubuntu/ $(lsb_release -s -c) varnish-3.0" &gt;&gt; /etc/apt/sources.list
+    echo "deb http://repo.varnish-cache.org/ubuntu/ $(lsb_release -s -c) varnish-3.0" >> /etc/apt/sources.list
 
 ## Install the Package
 

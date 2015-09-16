@@ -103,11 +103,11 @@ Turn on Assetic asset versioning for cache bursting. This is essential for the a
 Set sections of the website as standalone (ESI enabled). This allows various TTLs on a single page. Varnish puts each section together to construct the page before caching.
 
     {% render 'Vendor:Bundle:controller' with {}, {'standalone': true} %} // or...
-    $this-&gt;render('Vendor:Example:temp.html.twig', array('standalone' =&gt; true));
+    $this->render('Vendor:Example:temp.html.twig', array('standalone' => true));
 
 Set shared max age for responses and sections. If you set the max age (non-shared), ESI will not work because the whole page is cached.
 
-    $response-&gt;setSharedMaxAge(60);
+    $response->setSharedMaxAge(60);
 
 ## Setup Authentication
 

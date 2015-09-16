@@ -150,12 +150,12 @@ sub vcl_fetch {
 <p>Set sections of the website as standalone (ESI enabled). This allows various TTLs on a single page. Varnish puts each section together to construct the page before caching.</p>
 
 <pre><code>{% render 'Vendor:Bundle:controller' with {}, {'standalone': true} %} // or...
-$this-&amp;gt;render('Vendor:Example:temp.html.twig', array('standalone' =&amp;gt; true));
+$this-&gt;render('Vendor:Example:temp.html.twig', array('standalone' =&gt; true));
 </code></pre>
 
 <p>Set shared max age for responses and sections. If you set the max age (non-shared), ESI will not work because the whole page is cached.</p>
 
-<pre><code>$response-&amp;gt;setSharedMaxAge(60);
+<pre><code>$response-&gt;setSharedMaxAge(60);
 </code></pre>
 
 <h2>Setup Authentication</h2>

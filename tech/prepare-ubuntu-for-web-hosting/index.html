@@ -58,7 +58,7 @@
 
 <p>Use vi to edit files. Search Google to find basic commands.</p>
 
-<pre><code>echo &quot;[hostname]&quot; &amp;gt; /etc/hostname
+<pre><code>echo &quot;[hostname]&quot; &gt; /etc/hostname
 hostname -F /etc/hostname
 vi /etc/hosts
 </code></pre>
@@ -124,7 +124,7 @@ COMMIT
 
 <p>Import the settings file and create the script to re-import the rules on restart.</p>
 
-<pre><code>sudo /sbin/iptables-restore &amp;lt; /etc/iptables.up.rules
+<pre><code>sudo /sbin/iptables-restore &lt; /etc/iptables.up.rules
 sudo /sbin/iptables -L
 sudo vi /etc/network/if-pre-up.d/iptables
 </code></pre>
@@ -132,7 +132,7 @@ sudo vi /etc/network/if-pre-up.d/iptables
 <p>Add these lines to the script file.</p>
 
 <pre><code>#!/bin/sh
-/sbin/iptables-restore &amp;lt; /etc/iptables.up.rules
+/sbin/iptables-restore &lt; /etc/iptables.up.rules
 </code></pre>
 
 <p>Add execute permissions to the script, reboot, then login over SSH as our new user to test the firewall. Start commands with sudo when you login as the new user.</p>

@@ -83,11 +83,11 @@ Include /private/etc/apache2/extra/httpd-vhosts.conf
 
 <p>Copy and paste the following lines into the file:</p>
 
-<pre><code>&amp;lt;Directory &quot;/path/to/web/folder&quot;&amp;gt;
+<pre><code>&lt;Directory &quot;/path/to/web/folder&quot;&gt;
 Options FollowSymLinks Indexes MultiViews
 Require all granted
 AllowOverride All
-&amp;lt;/Directory&amp;gt;
+&lt;/Directory&gt;
 </code></pre>
 
 <p>Open the hosts file:</p>
@@ -107,10 +107,10 @@ AllowOverride All
 
 <p>Copy, paste and configure the following lines:</p>
 
-<pre><code>&amp;lt;VirtualHost *:80&amp;gt;
+<pre><code>&lt;VirtualHost *:80&gt;
 DocumentRoot &quot;/path/to/web/folder&quot;
 ServerName [example].localhost
-&amp;lt;/VirtualHost&amp;gt;
+&lt;/VirtualHost&gt;
 </code></pre>
 
 <p>Restart Apache:</p>

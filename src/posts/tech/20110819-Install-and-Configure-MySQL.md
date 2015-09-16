@@ -37,19 +37,19 @@ Change the root password, create database and users, give privileges.
 Switch to the superuser to avoid any permissions issues.
 
     sudo su -
-    mysqldump -u [user] -p [database] &gt; [filename].sql
+    mysqldump -u [user] -p [database] > [filename].sql
 
 ## Import a Database
 
 For smaller files, import from the unix shell.
 
-    mysql -u [user] -p [database] &lt; [filename].sql
+    mysql -u [user] -p [database] < [filename].sql
 
 For larger files, use the source command inside mysql.
 
     mysql -u [user] -p
     use [database]
-    source &lt; [file].sql
+    source < [file].sql
 
 ## Set Charset
 

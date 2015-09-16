@@ -18,13 +18,13 @@ The following line uses keepalive for 50,000 connections, at a concurrency of 10
 
 Add the following content to the test file:
 
-    &lt;!DOCTYPE HTML&gt;
-    &lt;html&gt;
-    &lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;
-    &lt;body&gt;
+    <!DOCTYPE HTML>
+    <html>
+    <head><title>#1 HTML Test</title></head>
+    <body>
     This is a web server test page.
-    &lt;/body&gt;
-    &lt;/html&gt;
+    </body>
+    </html>
 
 ## Create a Dynamic PHP File
 
@@ -32,13 +32,13 @@ Add the following content to the test file:
 
 Add the following content to the test file:
 
-    &lt;!DOCTYPE HTML&gt;
-    &lt;?php echo '&lt;html&gt;'; ?&gt;
-    &lt;?php echo '&lt;head&gt;&lt;title&gt;#2 PHP Test&lt;/title&gt;&lt;/head&gt;'; ?&gt;
-    &lt;?php echo '&lt;body&gt;'; ?&gt;
-    &lt;?php echo 'This is a web server test page.'; ?&gt;
-    &lt;?php echo '&lt;/body&gt;'; ?&gt;
-    &lt;?php echo '&lt;/html&gt;'; ?&gt;
+    <!DOCTYPE HTML>
+    <?php echo '<html>'; ?>
+    <?php echo '<head><title>#2 PHP Test</title></head>'; ?>
+    <?php echo '<body>'; ?>
+    <?php echo 'This is a web server test page.'; ?>
+    <?php echo '</body>'; ?>
+    <?php echo '</html>'; ?>
 
 ## Create a Dynamic MySQL File
 
@@ -46,8 +46,8 @@ Add the following content to the test file:
 
 Add the following content to the test file:
 
-    &lt;!DOCTYPE HTML&gt;
-    &lt;?php
+    <!DOCTYPE HTML>
+    <?php
        $link = mysql_connect("localhost", "username", "password");
        mysql_select_db("mytest");
 
@@ -59,10 +59,10 @@ Add the following content to the test file:
            print "$line[0]\n";
        }
        mysql_close($link);
-    ?&gt;
+    ?>
 
 Configure the database for the test file:
 
     USE mytest
     CREATE TABLE mytest (content text) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-    INSERT INTO mytest (content) VALUES('&lt;html&gt;&lt;head&gt;&lt;title&gt;#1 HTML Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;This is a web server test page.&lt;/body&gt;&lt;/html&gt;');
+    INSERT INTO mytest (content) VALUES('<html><head><title>#1 HTML Test</title></head><body>This is a web server test page.</body></html>');

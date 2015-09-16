@@ -38,11 +38,11 @@ Create a file for user permissions:
 
 Copy and paste the following lines into the file:
 
-    &lt;Directory "/path/to/web/folder"&gt;
+    <Directory "/path/to/web/folder">
     Options FollowSymLinks Indexes MultiViews
     Require all granted
     AllowOverride All
-    &lt;/Directory&gt;
+    </Directory>
 
 Open the hosts file:
 
@@ -58,10 +58,10 @@ Open the vhosts file:
 
 Copy, paste and configure the following lines:
 
-    &lt;VirtualHost *:80&gt;
+    <VirtualHost *:80>
     DocumentRoot "/path/to/web/folder"
     ServerName [example].localhost
-    &lt;/VirtualHost&gt;
+    </VirtualHost>
 
 Restart Apache:
 

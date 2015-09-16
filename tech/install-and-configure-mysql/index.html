@@ -81,21 +81,21 @@ exit
 <p>Switch to the superuser to avoid any permissions issues.</p>
 
 <pre><code>sudo su -
-mysqldump -u [user] -p [database] &amp;gt; [filename].sql
+mysqldump -u [user] -p [database] &gt; [filename].sql
 </code></pre>
 
 <h2>Import a Database</h2>
 
 <p>For smaller files, import from the unix shell.</p>
 
-<pre><code>mysql -u [user] -p [database] &amp;lt; [filename].sql
+<pre><code>mysql -u [user] -p [database] &lt; [filename].sql
 </code></pre>
 
 <p>For larger files, use the source command inside mysql.</p>
 
 <pre><code>mysql -u [user] -p
 use [database]
-source &amp;lt; [file].sql
+source &lt; [file].sql
 </code></pre>
 
 <h2>Set Charset</h2>
