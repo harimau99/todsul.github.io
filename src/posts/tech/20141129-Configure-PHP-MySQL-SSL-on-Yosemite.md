@@ -205,6 +205,10 @@ Find and update this line:
 
     pdo_mysql.default_socket=/tmp/mysql_ram.sock
 
+Reset temporary admin password
+
+    ALTER USER 'root'@'localhost' IDENTIFIED BY 'temp_password';
+
 Run the scripts to create the ramdisk and setup the database:
 
     ramdisk
@@ -227,8 +231,8 @@ Save credentials in the keychain:
 
 Configure user to not require password:
 
-    sudo chown -R ~
-    sudo chown -R /path/to/websites
+    sudo chown [username] -R ~
+    sudo chown [username] -R /path/to/websites
     sudo visudo
 
 Then add this ine under the admin user:
