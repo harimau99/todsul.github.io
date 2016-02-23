@@ -280,6 +280,11 @@ mysql -u root -e &quot;flush privileges;&quot;
 <pre><code>pdo_mysql.default_socket=/tmp/mysql_ram.sock
 </code></pre>
 
+<p>Reset temporary admin password</p>
+
+<pre><code>ALTER USER 'root'@'localhost' IDENTIFIED BY 'temp_password';
+</code></pre>
+
 <p>Run the scripts to create the ramdisk and setup the database:</p>
 
 <pre><code>ramdisk
@@ -306,8 +311,8 @@ git config --global user.email 'email'
 
 <p>Configure user to not require password:</p>
 
-<pre><code>sudo chown -R ~
-sudo chown -R /path/to/websites
+<pre><code>sudo chown [username] -R ~
+sudo chown [username] -R /path/to/websites
 sudo visudo
 </code></pre>
 
