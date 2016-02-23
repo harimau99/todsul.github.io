@@ -207,7 +207,7 @@ Find and update this line:
 
 Reset temporary admin password
 
-    ALTER USER 'root'@'localhost' IDENTIFIED BY 'temp_password';
+    ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
 
 Run the scripts to create the ramdisk and setup the database:
 
